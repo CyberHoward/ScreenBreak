@@ -5,7 +5,8 @@
 //  Created by Moe Ghanem on 2/19/23.
 //
 import SwiftUI
-import Firebase
+//import Firebase
+import FirebaseAuth
 import RiveRuntime
 
 struct RegisterView: View {

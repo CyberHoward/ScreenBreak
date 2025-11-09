@@ -5,7 +5,7 @@
 //  Created by Moe Ghanem on 2/19/23.
 //
 import SwiftUI
-import Firebase
+import FirebaseAuth
 
 struct LoginView: View {
     
