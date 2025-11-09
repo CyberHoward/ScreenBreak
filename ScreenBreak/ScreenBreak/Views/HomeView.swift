@@ -22,6 +22,7 @@ struct HomeView: View {
         users: .all,
         devices: .init([.iPhone, .iPad])
     )
+    @State private var message = ""
     
     @EnvironmentObject var model: MyModel
     let button = RiveViewModel(fileName: "button")
@@ -37,11 +38,34 @@ struct HomeView: View {
             ZStack {
                 Color("backgroundColor")
                     .edgesIgnoringSafeArea(.all)
-                VStack {
+                VStack(spacing: 16){
+                    
+                    // INPUT BAR
+                    HStack(spacing: 12) {
+                        TextField("Type something…", text: $message)
+                            .padding(12)
+                            .background(Color.white)
+                            .cornerRadius(14)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14)
+                                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                            )
+
+                        Button {
+                            // mic action here
+                            print("mic tapped")
+                        } label: {
+                            Image(systemName: "mic.fill")
+                                .foregroundColor(.white)
+                                .padding(12)
+                                .background(Color.blue)
+                                .clipShape(Circle())
+                        }
+                    }
                     
                     DeviceActivityReport(homeContext, filter: filter)
-                    Spacer(minLength:60)
                     
+                    Spacer()
                 }
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
