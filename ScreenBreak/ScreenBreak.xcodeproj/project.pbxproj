@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		004E46712EC0FD1500B4DB77 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 004E46702EC0FD1500B4DB77 /* SwiftUICharts */; };
+		004E46782EC0FEFD00B4DB77 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 004E46772EC0FEFD00B4DB77 /* SwiftUICharts */; };
+		00AD236D2EBE849500AEF630 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 00AD236C2EBE849500AEF630 /* FirebaseAuth */; };
+		00AD23702EBE85BA00AEF630 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 00AD236F2EBE85BA00AEF630 /* RiveRuntime */; };
 		481388F129ABE0F2001B8A55 /* ScreenBreakApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481388F029ABE0F2001B8A55 /* ScreenBreakApp.swift */; };
 		481388F329ABE0F2001B8A55 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481388F229ABE0F2001B8A55 /* ContentView.swift */; };
 		481388F529ABE0F6001B8A55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 481388F429ABE0F6001B8A55 /* Assets.xcassets */; };
@@ -29,7 +33,6 @@
 		4846CFE529D313B1005D018E /* HomeReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4846CFE429D313B1005D018E /* HomeReport.swift */; };
 		4846CFE729D313FA005D018E /* HomeReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4846CFE629D313FA005D018E /* HomeReportView.swift */; };
 		4846CFF029D49A48005D018E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4846CFEE29D49A1E005D018E /* CardView.swift */; };
-		4846CFF329D72FED005D018E /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 4846CFF229D72FED005D018E /* RiveRuntime */; };
 		4846CFFC29D73130005D018E /* house.riv in Resources */ = {isa = PBXBuildFile; fileRef = 4846CFF529D73130005D018E /* house.riv */; };
 		4846CFFD29D73130005D018E /* house.riv in Resources */ = {isa = PBXBuildFile; fileRef = 4846CFF529D73130005D018E /* house.riv */; };
 		4846CFFE29D73130005D018E /* house.riv in Resources */ = {isa = PBXBuildFile; fileRef = 4846CFF529D73130005D018E /* house.riv */; };
@@ -79,8 +82,6 @@
 		48AE9A0B29DC80D70092766C /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 48AE99FE29DC80D70092766C /* Inter-SemiBold.ttf */; };
 		48AE9A0C29DC80D70092766C /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 48AE99FE29DC80D70092766C /* Inter-SemiBold.ttf */; };
 		48AE9A0D29DC80D70092766C /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 48AE99FE29DC80D70092766C /* Inter-SemiBold.ttf */; };
-		48AE9A1029DDC9D50092766C /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 48AE9A0F29DDC9D50092766C /* SwiftUICharts */; };
-		48AE9A1429DDD7D10092766C /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 48AE9A1329DDD7D10092766C /* SwiftUICharts */; };
 		48AE9A1629DF316B0092766C /* LoadingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AE9A1529DF316B0092766C /* LoadingAnimation.swift */; };
 		48AE9A1729DF316B0092766C /* LoadingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AE9A1529DF316B0092766C /* LoadingAnimation.swift */; };
 		48AE9A1829DF316B0092766C /* LoadingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AE9A1529DF316B0092766C /* LoadingAnimation.swift */; };
@@ -111,7 +112,6 @@
 		48AE9AAA29F5FEE80092766C /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AE99F729DC7E6F0092766C /* CustomFont.swift */; };
 		48AE9AAD29F81CAF0092766C /* ApplicationsContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 48AE9AAB29F81CAF0092766C /* ApplicationsContainer.xcdatamodeld */; };
 		DD69DAAB29D20C850024831D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD69DAAA29D20C850024831D /* GoogleService-Info.plist */; };
-		DD69DAAE29D20D290024831D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DD69DAAD29D20D290024831D /* FirebaseAuth */; };
 		DD69DAC029D212560024831D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD69DABD29D212560024831D /* LoginView.swift */; };
 		DD69DAC129D212560024831D /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD69DABE29D212560024831D /* SignInView.swift */; };
 		DD69DAC229D212560024831D /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD69DABF29D212560024831D /* RegisterView.swift */; };
@@ -281,9 +281,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48AE9A1029DDC9D50092766C /* SwiftUICharts in Frameworks */,
-				DD69DAAE29D20D290024831D /* FirebaseAuth in Frameworks */,
-				4846CFF329D72FED005D018E /* RiveRuntime in Frameworks */,
+				004E46712EC0FD1500B4DB77 /* SwiftUICharts in Frameworks */,
+				00AD236D2EBE849500AEF630 /* FirebaseAuth in Frameworks */,
+				00AD23702EBE85BA00AEF630 /* RiveRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,7 +305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48AE9A1429DDD7D10092766C /* SwiftUICharts in Frameworks */,
+				004E46782EC0FEFD00B4DB77 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,9 +554,9 @@
 			);
 			name = ScreenBreak;
 			packageProductDependencies = (
-				DD69DAAD29D20D290024831D /* FirebaseAuth */,
-				4846CFF229D72FED005D018E /* RiveRuntime */,
-				48AE9A0F29DDC9D50092766C /* SwiftUICharts */,
+				00AD236C2EBE849500AEF630 /* FirebaseAuth */,
+				00AD236F2EBE85BA00AEF630 /* RiveRuntime */,
+				004E46702EC0FD1500B4DB77 /* SwiftUICharts */,
 			);
 			productName = ScreenBreak;
 			productReference = 481388ED29ABE0F2001B8A55 /* ScreenBreak.app */;
@@ -609,11 +609,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				48AE9A1229DDD2BF0092766C /* PBXTargetDependency */,
 			);
 			name = ReportExtension;
 			packageProductDependencies = (
-				48AE9A1329DDD7D10092766C /* SwiftUICharts */,
+				004E46772EC0FEFD00B4DB77 /* SwiftUICharts */,
 			);
 			productName = ReportExtension;
 			productReference = 4846CFBA29D1039E005D018E /* ReportExtension.appex */;
@@ -715,9 +714,9 @@
 			);
 			mainGroup = 481388E429ABE0F1001B8A55;
 			packageReferences = (
-				DD69DAAC29D20D290024831D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				4846CFF129D72FED005D018E /* XCRemoteSwiftPackageReference "rive-ios" */,
-				48AE9A0E29DDC9D50092766C /* XCRemoteSwiftPackageReference "ChartView" */,
+				00AD236B2EBE849500AEF630 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				00AD236E2EBE85BA00AEF630 /* XCRemoteSwiftPackageReference "rive-ios" */,
+				004E466F2EC0FD1500B4DB77 /* XCRemoteSwiftPackageReference "SwiftUICharts" */,
 			);
 			productRefGroup = 481388EE29ABE0F2001B8A55 /* Products */;
 			projectDirPath = "";
@@ -955,10 +954,6 @@
 			target = 4846CFD629D1E94F005D018E /* DeviceActivityMonitor */;
 			targetProxy = 4846CFDE29D1E94F005D018E /* PBXContainerItemProxy */;
 		};
-		48AE9A1229DDD2BF0092766C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 48AE9A1129DDD2BF0092766C /* SwiftUICharts */;
-		};
 		48AE9A2829E22DEF0092766C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 48AE9A1C29E22DEF0092766C /* shield */;
@@ -1097,12 +1092,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScreenBreak/Preview Content\"";
-				DEVELOPMENT_TEAM = 9X5NJM66A3;
+				DEVELOPMENT_TEAM = Z8P79RAHD4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScreenBreak/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Screen Break";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1110,7 +1106,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ChristianPichardo.ScreenBreak;
+				PRODUCT_BUNDLE_IDENTIFIER = Ohmroger.ScreenBreak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1133,12 +1129,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScreenBreak/Preview Content\"";
-				DEVELOPMENT_TEAM = 9X5NJM66A3;
+				DEVELOPMENT_TEAM = Z8P79RAHD4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScreenBreak/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Screen Break";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1146,7 +1143,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ChristianPichardo.ScreenBreak;
+				PRODUCT_BUNDLE_IDENTIFIER = Ohmroger.ScreenBreak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1544,57 +1541,52 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4846CFF129D72FED005D018E /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+		004E466F2EC0FD1500B4DB77 /* XCRemoteSwiftPackageReference "SwiftUICharts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/willdale/SwiftUICharts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		00AD236B2EBE849500AEF630 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.5.0;
+			};
+		};
+		00AD236E2EBE85BA00AEF630 /* XCRemoteSwiftPackageReference "rive-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rive-app/rive-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
-		48AE9A0E29DDC9D50092766C /* XCRemoteSwiftPackageReference "ChartView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AppPear/ChartView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		DD69DAAC29D20D290024831D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
+				minimumVersion = 6.12.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4846CFF229D72FED005D018E /* RiveRuntime */ = {
+		004E46702EC0FD1500B4DB77 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4846CFF129D72FED005D018E /* XCRemoteSwiftPackageReference "rive-ios" */;
-			productName = RiveRuntime;
-		};
-		48AE9A0F29DDC9D50092766C /* SwiftUICharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 48AE9A0E29DDC9D50092766C /* XCRemoteSwiftPackageReference "ChartView" */;
+			package = 004E466F2EC0FD1500B4DB77 /* XCRemoteSwiftPackageReference "SwiftUICharts" */;
 			productName = SwiftUICharts;
 		};
-		48AE9A1129DDD2BF0092766C /* SwiftUICharts */ = {
+		004E46772EC0FEFD00B4DB77 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 48AE9A0E29DDC9D50092766C /* XCRemoteSwiftPackageReference "ChartView" */;
+			package = 004E466F2EC0FD1500B4DB77 /* XCRemoteSwiftPackageReference "SwiftUICharts" */;
 			productName = SwiftUICharts;
 		};
-		48AE9A1329DDD7D10092766C /* SwiftUICharts */ = {
+		00AD236C2EBE849500AEF630 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 48AE9A0E29DDC9D50092766C /* XCRemoteSwiftPackageReference "ChartView" */;
-			productName = SwiftUICharts;
-		};
-		DD69DAAD29D20D290024831D /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DD69DAAC29D20D290024831D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 00AD236B2EBE849500AEF630 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		00AD236F2EBE85BA00AEF630 /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00AD236E2EBE85BA00AEF630 /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
 		};
 /* End XCSwiftPackageProductDependency section */
 
