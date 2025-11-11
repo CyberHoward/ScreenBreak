@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		004E46712EC0FD1500B4DB77 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 004E46702EC0FD1500B4DB77 /* SwiftUICharts */; };
 		004E46782EC0FEFD00B4DB77 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 004E46772EC0FEFD00B4DB77 /* SwiftUICharts */; };
+		004E467B2EC1101900B4DB77 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 004E467A2EC1101900B4DB77 /* OpenAI */; };
+		004E467D2EC1111300B4DB77 /* AIChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004E467C2EC1111300B4DB77 /* AIChatService.swift */; };
+		004E467F2EC1112500B4DB77 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004E467E2EC1112500B4DB77 /* ChatViewModel.swift */; };
+		004E46812EC113CB00B4DB77 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004E46802EC113CB00B4DB77 /* ChatView.swift */; };
 		00AD236D2EBE849500AEF630 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 00AD236C2EBE849500AEF630 /* FirebaseAuth */; };
 		00AD23702EBE85BA00AEF630 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 00AD236F2EBE85BA00AEF630 /* RiveRuntime */; };
 		481388F129ABE0F2001B8A55 /* ScreenBreakApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481388F029ABE0F2001B8A55 /* ScreenBreakApp.swift */; };
@@ -191,6 +195,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		004E467C2EC1111300B4DB77 /* AIChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatService.swift; sourceTree = "<group>"; };
+		004E467E2EC1112500B4DB77 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		004E46802EC113CB00B4DB77 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		481388ED29ABE0F2001B8A55 /* ScreenBreak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenBreak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		481388F029ABE0F2001B8A55 /* ScreenBreakApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenBreakApp.swift; sourceTree = "<group>"; };
 		481388F229ABE0F2001B8A55 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -283,6 +290,7 @@
 			files = (
 				004E46712EC0FD1500B4DB77 /* SwiftUICharts in Frameworks */,
 				00AD236D2EBE849500AEF630 /* FirebaseAuth in Frameworks */,
+				004E467B2EC1101900B4DB77 /* OpenAI in Frameworks */,
 				00AD23702EBE85BA00AEF630 /* RiveRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,6 +379,8 @@
 		481388EF29ABE0F2001B8A55 /* ScreenBreak */ = {
 			isa = PBXGroup;
 			children = (
+				004E467E2EC1112500B4DB77 /* ChatViewModel.swift */,
+				004E467C2EC1111300B4DB77 /* AIChatService.swift */,
 				48AE99FB29DC80D70092766C /* Fonts */,
 				DD69DAAA29D20C850024831D /* GoogleService-Info.plist */,
 				4846CFB429CCB2C4005D018E /* ScreenBreak.entitlements */,
@@ -478,6 +488,7 @@
 		488340AE29B80AA800910A27 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				004E46802EC113CB00B4DB77 /* ChatView.swift */,
 				481388F229ABE0F2001B8A55 /* ContentView.swift */,
 				DDEEB70D29DB4560006FC9E5 /* CreateProfileView.swift */,
 				488340BB29C8A80B00910A27 /* LaunchScreenView.swift */,
@@ -557,6 +568,7 @@
 				00AD236C2EBE849500AEF630 /* FirebaseAuth */,
 				00AD236F2EBE85BA00AEF630 /* RiveRuntime */,
 				004E46702EC0FD1500B4DB77 /* SwiftUICharts */,
+				004E467A2EC1101900B4DB77 /* OpenAI */,
 			);
 			productName = ScreenBreak;
 			productReference = 481388ED29ABE0F2001B8A55 /* ScreenBreak.app */;
@@ -717,6 +729,7 @@
 				00AD236B2EBE849500AEF630 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				00AD236E2EBE85BA00AEF630 /* XCRemoteSwiftPackageReference "rive-ios" */,
 				004E466F2EC0FD1500B4DB77 /* XCRemoteSwiftPackageReference "SwiftUICharts" */,
+				004E46792EC1101900B4DB77 /* XCRemoteSwiftPackageReference "OpenAI" */,
 			);
 			productRefGroup = 481388EE29ABE0F2001B8A55 /* Products */;
 			projectDirPath = "";
@@ -839,13 +852,16 @@
 				48AE9AA629EB66490092766C /* RestrictionView.swift in Sources */,
 				4846CFD029D1E888005D018E /* MyModel.swift in Sources */,
 				48AE9AA429EB663B0092766C /* DurationPickerView.swift in Sources */,
+				004E46812EC113CB00B4DB77 /* ChatView.swift in Sources */,
 				DD69DAC229D212560024831D /* RegisterView.swift in Sources */,
 				4846CFD229D1E8E0005D018E /* MySchedule.swift in Sources */,
 				48AE99F829DC7E6F0092766C /* CustomFont.swift in Sources */,
+				004E467F2EC1112500B4DB77 /* ChatViewModel.swift in Sources */,
 				488340B629B80D3500910A27 /* MoreInsightsView.swift in Sources */,
 				481388FA29ABE0F6001B8A55 /* Persistence.swift in Sources */,
 				488340BA29B8198D00910A27 /* HomeView.swift in Sources */,
 				48AE9A1629DF316B0092766C /* LoadingAnimation.swift in Sources */,
+				004E467D2EC1111300B4DB77 /* AIChatService.swift in Sources */,
 				481388FD29ABE0F6001B8A55 /* ScreenBreak.xcdatamodeld in Sources */,
 				488340B829B8148700910A27 /* LeaderboardView.swift in Sources */,
 				481388F329ABE0F2001B8A55 /* ContentView.swift in Sources */,
@@ -1549,6 +1565,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		004E46792EC1101900B4DB77 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.7;
+			};
+		};
 		00AD236B2EBE849500AEF630 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1577,6 +1601,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 004E466F2EC0FD1500B4DB77 /* XCRemoteSwiftPackageReference "SwiftUICharts" */;
 			productName = SwiftUICharts;
+		};
+		004E467A2EC1101900B4DB77 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 004E46792EC1101900B4DB77 /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
 		};
 		00AD236C2EBE849500AEF630 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
