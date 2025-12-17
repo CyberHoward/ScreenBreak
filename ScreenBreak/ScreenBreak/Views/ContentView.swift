@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  ScreenBreak
 //
-//  Created by Christian Pichardo on 2/26/23.
+//  Main app container
 //
 
 import SwiftUI
@@ -15,51 +15,54 @@ import ManagedSettings
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @AppStorage("selectedTab") var selectedTab: Tab = .star
-    @AppStorage("showOnboarding") var showOnboarding = true
-    @AppStorage("firstTime") var firstTime = true
+    @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
     @EnvironmentObject var launchScreenManager: LaunchScreenManager
-    @State private var isPressed = false
+    @State private var showOnboarding = false
 
     var body: some View {
         ZStack{
             Color("backgroundColor")
-            switch selectedTab{
-            case .home:
-                HomeView()
-            case .star:
-                AppsView()
-            case .timer:
-                ConfigRestrictionsView()
-            case .search:
-                MoreInsightsView()
-            }
-            TabBar()
             
+            // Main app content
+            if hasCompletedOnboarding {
+                switch selectedTab{
+                case .home:
+                    HomeView()
+                case .star:
+                    RequestAccessView()
+                case .timer:
+                    SettingsView()
+                case .search:
+                    MoreInsightsView()
+                }
+                TabBar()
+            } else {
+                // Show placeholder until onboarding check completes
+                Color.clear
+            }
         }
-        .fullScreenCover(isPresented:$showOnboarding){
-            OnboardingView()
+        .fullScreenCover(isPresented: $showOnboarding) {
+            OnboardingContainerView(isOnboardingComplete: $hasCompletedOnboarding)
         }
-        .onAppear{
-            if !showOnboarding{
+        .onAppear {
+            // Check if user has completed onboarding
+            if !hasCompletedOnboarding {
+                showOnboarding = true
+            } else {
                 DispatchQueue
                     .main
-                    .asyncAfter(deadline:.now() + 5){
+                    .asyncAfter(deadline: .now() + 2) {
                         launchScreenManager.dismiss()
                     }
             }
-
         }
-        
     }
-    
 }
-
-
-
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(LaunchScreenManager())
+        ContentView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            .environmentObject(LaunchScreenManager())
     }
 }

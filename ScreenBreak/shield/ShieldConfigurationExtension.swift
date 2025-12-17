@@ -2,7 +2,7 @@
 //  ShieldConfigurationExtension.swift
 //  shield
 //
-//  Created by Christian Pichardo on 4/8/23.
+//  Configures the appearance of shields for blocked apps (Opal-style)
 //
 
 import ManagedSettings
@@ -14,34 +14,45 @@ import UIKit
 // Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
 class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     
-    let title = "ScreenBreak"
-    let body = "You have restricted usage of this application. Wait for the time limit to end."
-    
     override func configuration(shielding application: Application) -> ShieldConfiguration {
-        // Customize the shield as needed for applications.
+        // Opal-style messaging: clear instruction for user
         return ShieldConfiguration(
-            backgroundBlurStyle: UIBlurEffect.Style.light,
-            backgroundColor: UIColor.gray,
+            backgroundBlurStyle: .systemMaterial,
+            backgroundColor: UIColor.systemGray6,
             icon: UIImage(named: "sblogosmall.png"),
-            title: ShieldConfiguration.Label(text: title, color: .white),
-            subtitle: ShieldConfiguration.Label(text: body, color: .white),
-            primaryButtonLabel: ShieldConfiguration.Label(text: "Close", color: UIColor.black),
-            primaryButtonBackgroundColor: .white,
-            secondaryButtonLabel: nil)
+            title: ShieldConfiguration.Label(text: "This app is blocked", color: .label),
+            subtitle: ShieldConfiguration.Label(
+                text: "Open ScreenBreak to request access",
+                color: .secondaryLabel
+            ),
+            primaryButtonLabel: ShieldConfiguration.Label(text: "Close", color: .systemBlue),
+            primaryButtonBackgroundColor: .systemBackground,
+            secondaryButtonLabel: nil
+        )
     }
     
     override func configuration(shielding application: Application, in category: ActivityCategory) -> ShieldConfiguration {
-        // Customize the shield as needed for applications shielded because of their category.
-        ShieldConfiguration()
+        // Same configuration for category-based shielding
+        return configuration(shielding: application)
     }
     
     override func configuration(shielding webDomain: WebDomain) -> ShieldConfiguration {
-        // Customize the shield as needed for web domains.
-        ShieldConfiguration()
+        // Similar configuration for web domains
+        return ShieldConfiguration(
+            backgroundBlurStyle: .systemMaterial,
+            backgroundColor: UIColor.systemGray6,
+            title: ShieldConfiguration.Label(text: "This website is blocked", color: .label),
+            subtitle: ShieldConfiguration.Label(
+                text: "Open ScreenBreak to request access",
+                color: .secondaryLabel
+            ),
+            primaryButtonLabel: ShieldConfiguration.Label(text: "Close", color: .systemBlue),
+            primaryButtonBackgroundColor: .systemBackground,
+            secondaryButtonLabel: nil
+        )
     }
     
     override func configuration(shielding webDomain: WebDomain, in category: ActivityCategory) -> ShieldConfiguration {
-        // Customize the shield as needed for web domains shielded because of their category.
-        ShieldConfiguration()
+        return configuration(shielding: webDomain)
     }
 }

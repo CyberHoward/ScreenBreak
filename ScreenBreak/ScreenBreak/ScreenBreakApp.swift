@@ -2,82 +2,65 @@
 //  ScreenBreakApp.swift
 //  ScreenBreak
 //
-//  Created by Christian Pichardo on 2/26/23.
+//  Main app entry point
 //
 
 import SwiftUI
 import DeviceActivity
 import FamilyControls
 import ManagedSettings
-import FirebaseCore
-
-
-//class AppDelegate: NSObject, UIApplicationDelegate {
-//  func application(_ application: UIApplication,
-//                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-//    FirebaseApp.configure()
-//
-//    return true
-//  }
-//}
 
 @main
 struct ScreenBreakApp: App {
-    //@UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     let persistenceController = PersistenceController.shared
-    let center = AuthorizationCenter.shared
     @StateObject var launchScreenManager = LaunchScreenManager()
     @StateObject var model = MyModel.shared
-    @StateObject var store = ManagedSettingsStore()
-    @State var show = false
-    
+    @State var isReady = false
     
     var body: some Scene {
         WindowGroup {
-            ZStack{
-                VStack{
-                    if show {
-                        ContentView().environmentObject(model)
-                            .environmentObject(store)
-                    }else{
-                        STProgressView()
-                    }
-                    
-                }.onAppear{
-                    Task{
-                        do{
-                            try await center.requestAuthorization(for: FamilyControlsMember.individual)
-                            show = true
-//                            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-//                                if success {
-//                                    print("All set!")
-//                                } else if let error = error {
-//                                    print(error.localizedDescription)
-//                                }
-//                            }
-                            
-                        }catch{
-                            //Handle error here
-                        }
-                    }
+            ZStack {
+                if isReady {
+                    ContentView()
+                        .environmentObject(model)
+                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                } else {
+                    STProgressView()
                 }
                 
-                
-                if launchScreenManager.state != .completed{
+                if launchScreenManager.state != .completed {
                     LaunchScreenView()
                 }
-                 
             }
             .environmentObject(launchScreenManager)
-           
+            .onAppear {
+                // Initialize services
+                _ = ShieldManagementService.shared
+                _ = SessionMonitorService.shared
+                
+                // Small delay to show launch screen
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    isReady = true
+                }
+            }
         }
     }
 }
 
 struct STProgressView: View {
     var body: some View {
-        ProgressView {
-            Text("Loading")
+        ZStack {
+            Color("backgroundColor")
+                .ignoresSafeArea()
+            
+            VStack(spacing: 16) {
+                ProgressView()
+                    .scaleEffect(1.2)
+                
+                Text("Loading ScreenBreak...")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
         }
     }
 }

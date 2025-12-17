@@ -2,53 +2,85 @@
 //  DeviceActivityMonitorExtension.swift
 //  DeviceActivityMonitor
 //
-//  Created by Christian Pichardo on 3/27/23.
+//  Monitors device activity and handles session expiration cleanup
 //
 
 import DeviceActivity
 import FamilyControls
-import UserNotifications
 import ManagedSettings
 
-// Optionally override any of the functions below.
 // Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
-    let store = ManagedSettingsStore()
-    let center = UNUserNotificationCenter.current()
+    let store = ManagedSettingsStore(named: ManagedSettingsStore.Name("ScreenBreakStore"))
     
     override func intervalDidStart(for activity: DeviceActivityName) {
-        
         super.intervalDidStart(for: activity)
+        // Session interval started - shield is already active
     }
     
     override func intervalDidEnd(for activity: DeviceActivityName) {
         super.intervalDidEnd(for: activity)
-        store.shield.applications = nil
-        store.shield.applicationCategories = nil
-        // Handle the end of the interval.
+        
+        // Session time expired - re-apply full shield
+        // Load shielded apps from App Group storage
+        if let shieldedApps = loadShieldedApps() {
+            applyShield(shieldedApps)
+        }
     }
     
     override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
         super.eventDidReachThreshold(event, activity: activity)
-        //store.shield.applications = nil
-        // Handle the event reaching its threshold.
-    }
-    
-    override func intervalWillStartWarning(for activity: DeviceActivityName) {
-        super.intervalWillStartWarning(for: activity)
-        
-        // Handle the warning before the interval starts.
+        // Event threshold reached - could be used for warnings
     }
     
     override func intervalWillEndWarning(for activity: DeviceActivityName) {
         super.intervalWillEndWarning(for: activity)
-        
-        // Handle the warning before the interval ends.
+        // Warning before session ends - could trigger notification
     }
     
-    override func eventWillReachThresholdWarning(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
-        super.eventWillReachThresholdWarning(event, activity: activity)
+    // MARK: - Private Helpers
+    
+    private func loadShieldedApps() -> AppSelection? {
+        guard let suiteName = "group.com.screenbreak.shared",
+              let defaults = UserDefaults(suiteName: suiteName),
+              let data = defaults.data(forKey: "shieldedApps") else {
+            return nil
+        }
         
-        // Handle the warning before the event reaches its threshold.
+        return try? JSONDecoder().decode(AppSelection.self, from: data)
+    }
+    
+    private func applyShield(_ selection: AppSelection) {
+        let familySelection = selection.toFamilyActivitySelection()
+        
+        store.shield.applications = familySelection.applicationTokens.isEmpty 
+            ? nil 
+            : familySelection.applicationTokens
+        
+        store.shield.applicationCategories = familySelection.categoryTokens.isEmpty
+            ? nil
+            : ShieldSettings.ActivityCategoryPolicy.specific(familySelection.categoryTokens)
+    }
+}
+
+// MARK: - AppSelection for Extension
+
+/// Minimal AppSelection implementation for extension use
+struct AppSelection: Codable {
+    var applicationTokensData: [Data]
+    var categoryTokensData: [Data]
+    
+    func toFamilyActivitySelection() -> FamilyActivitySelection {
+        var selection = FamilyActivitySelection()
+        
+        selection.applicationTokens = Set(applicationTokensData.compactMap { data in
+            try? NSKeyedUnarchiver.unarchivedObject(ofClass: ApplicationToken.self, from: data)
+        })
+        
+        selection.categoryTokens = Set(categoryTokensData.compactMap { data in
+            try? NSKeyedUnarchiver.unarchivedObject(ofClass: ActivityCategoryToken.self, from: data)
+        })
+        
+        return selection
     }
 }

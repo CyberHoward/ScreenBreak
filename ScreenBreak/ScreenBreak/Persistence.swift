@@ -34,6 +34,13 @@ struct PersistenceController {
         container = NSPersistentContainer(name: "ScreenBreak")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        } else {
+            // Use App Group container for shared storage
+            let containerURL = AppGroupStorage.shared.containerURL
+            let storeURL = containerURL.appendingPathComponent("ScreenBreak.sqlite")
+            
+            let description = NSPersistentStoreDescription(url: storeURL)
+            container.persistentStoreDescriptions = [description]
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {

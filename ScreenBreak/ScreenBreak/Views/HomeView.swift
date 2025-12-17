@@ -2,93 +2,82 @@
 //  HomeView.swift
 //  ScreenBreak
 //
-//  Created by Christian Pichardo on 3/7/23.
+//  Main dashboard showing pact progress and stats
 //
 
 import SwiftUI
-import SwiftUICharts
-import RiveRuntime
-import DeviceActivity
 
 struct HomeView: View {
-    
-    @State private var homeContext: DeviceActivityReport.Context = .init(rawValue: "Home Report")
-    @State private var filter = DeviceActivityFilter(
-        segment: .daily(
-            during: Calendar.current.dateInterval(
-               of: .day, for: .now
-            )!
-        ),
-        users: .all,
-        devices: .init([.iPhone, .iPad])
-    )
-    @State private var message = ""
-    
-    @EnvironmentObject var model: MyModel
-    let button = RiveViewModel(fileName: "button")
+    @StateObject private var viewModel = HomeViewModel()
+    @State private var showingRequestAccess = false
     
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "Poppins-Bold", size: 40)!]
-
-        }
+    }
     
-
     var body: some View {
         NavigationView {
             ZStack {
                 Color("backgroundColor")
-                    .edgesIgnoringSafeArea(.all)
-                VStack(spacing: 16){
-                    
-                    // INPUT BAR
-                    HStack(spacing: 12) {
-                        TextField("Type something…", text: $message)
-                            .padding(12)
-                            .background(Color.white)
-                            .cornerRadius(14)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 14)
-                                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                            )
-
-                        Button {
-                            // mic action here
-                            print("mic tapped")
-                        } label: {
-                            Image(systemName: "mic.fill")
-                                .foregroundColor(.white)
-                                .padding(12)
-                                .background(Color.blue)
-                                .clipShape(Circle())
-                        }
-                    }
-                    
-                    DeviceActivityReport(homeContext, filter: filter)
-                    
-                    Spacer()
-                }
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity)
-                .navigationBarTitle("ScreenBreak")
-                .navigationBarItems(trailing: Image("appLogo")
-                    .resizable()
-                    .frame(width: 70.0, height: 70.0)
-                    .padding(.top)
-                    .padding(.top)
-                    .padding(.top))
+                    .ignoresSafeArea()
                 
+                if viewModel.hasPact {
+                    dashboardContent
+                } else {
+                    noPactView
+                }
+            }
+            .navigationTitle("Dashboard")
+            .refreshable {
+                viewModel.refresh()
             }
         }
         .navigationViewStyle(.stack)
-        
     }
-
+    
+    private var dashboardContent: some View {
+        ScrollView {
+            VStack(spacing: 20) {
+                // Pact progress card
+                PactProgressCard(viewModel: viewModel)
+                
+                // Today's stats
+                TodayStatsCard(viewModel: viewModel)
+                
+                // Active sessions
+                if !viewModel.activeSessions.isEmpty {
+                    ActiveSessionsCard(sessions: viewModel.activeSessions)
+                }
+                
+                // Quick actions
+                QuickActionsCard(showingRequestAccess: $showingRequestAccess)
+            }
+            .padding()
+        }
+        .sheet(isPresented: $showingRequestAccess) {
+            RequestAccessView()
+        }
+    }
+    
+    private var noPactView: some View {
+        VStack(spacing: 24) {
+            Image(systemName: "flag.checkered")
+                .font(.system(size: 80))
+                .foregroundColor(.gray)
+            
+            Text("No Active Pact")
+                .font(.title)
+                .fontWeight(.bold)
+            
+            Text("Complete onboarding to start your journey")
+                .font(.body)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
+    }
 }
 
-
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-    }
+#Preview {
+    HomeView()
 }
