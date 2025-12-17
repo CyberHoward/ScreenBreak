@@ -69,7 +69,7 @@ struct HomeView: View {
                 }
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
-                .navigationBarTitle("Home")
+                .navigationBarTitle("ScreenBreak")
                 .navigationBarItems(trailing: Image("appLogo")
                     .resizable()
                     .frame(width: 70.0, height: 70.0)

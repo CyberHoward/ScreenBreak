@@ -4,7 +4,7 @@
 //
 //  Created by Robin Bisschop on 09/11/2025.
 //
-
+import SwiftUI;
 
 struct ChatView: View {
     @StateObject private var viewModel = ChatViewModel()
@@ -77,9 +77,6 @@ struct ChatView: View {
     }
 }
 
-#Preview
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatView()
-    }
+#Preview {
+    ChatView()
 }

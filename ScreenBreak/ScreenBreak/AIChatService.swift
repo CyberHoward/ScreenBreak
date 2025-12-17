@@ -19,13 +19,13 @@ final class AIChatService {
             temperature: 0.7
         )
 
-        let openAIStream = client.chatsStream(query: query)
+        let openAIStream: AsyncThrowingStream<ChatStreamResult, Error> = client.chatsStream(query: query)
 
         return AsyncThrowingStream<String, Error> { continuation in
             Task {
                 do {
                     for try await partial in openAIStream {
-                        if let delta = partial.choices.first?.delta?.content?.string {
+                        if let delta = partial.choices.first?.delta.content {
                             continuation.yield(delta)
                         }
                     }
