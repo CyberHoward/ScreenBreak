@@ -4,18 +4,19 @@
 //
 //  ViewModel for onboarding flow
 //
+//  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import Foundation
-import FamilyControls
+// import FamilyControls  // Commented out for minimal build
 import Observation
 
 @Observable
 @MainActor
 final class OnboardingViewModel {
     // Services
-    private let authService = AuthorizationService.shared
+    // private let authService = AuthorizationService.shared  // Commented out for minimal build
     private let shieldService = ShieldManagementService.shared
-    private let storage = AppGroupStorage.shared
+    // private let storage = AppGroupStorage.shared  // Commented out for minimal build
     
     // Onboarding state
     var currentStep: OnboardingStep = .welcome
@@ -25,7 +26,7 @@ final class OnboardingViewModel {
     // User inputs
     var motivation: String = ""
     var pactDuration: Int = 14
-    var selectedApps = FamilyActivitySelection()
+    // var selectedApps = FamilyActivitySelection()  // Commented out for minimal build
     var rules = PactRules.defaultRules
     
     // Authorization status
@@ -62,7 +63,9 @@ final class OnboardingViewModel {
         case .pactConfiguration:
             return rules.isValid
         case .shieldedApps:
-            return !selectedApps.applicationTokens.isEmpty || !selectedApps.categoryTokens.isEmpty
+            // MINIMAL BUILD - Always allow proceeding
+            return true
+            // return !selectedApps.applicationTokens.isEmpty || !selectedApps.categoryTokens.isEmpty
         case .confirmation:
             return true
         case .completed:
@@ -70,6 +73,7 @@ final class OnboardingViewModel {
         }
     }
     
+    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     // MARK: - Authorization
     
     func requestAuthorization() async {
@@ -110,6 +114,7 @@ final class OnboardingViewModel {
         // Move to completed
         currentStep = .completed
     }
+    */
     
     // MARK: - Preset Configurations
     

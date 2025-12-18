@@ -4,9 +4,10 @@
 //
 //  ViewModel for the AI Gatekeeper flow
 //
+//  MINIMAL BUILD VERSION - ApplicationToken features commented out
 
 import Foundation
-import FamilyControls
+// import FamilyControls  // Commented out for minimal build
 import Observation
 
 @Observable
@@ -15,13 +16,13 @@ final class GatekeeperViewModel {
     // Services
     private let aiService = GatekeeperAIService()
     private let shieldService = ShieldManagementService.shared
-    private let storage = AppGroupStorage.shared
+    // private let storage = AppGroupStorage.shared  // Commented out for minimal build
     
     // State
     var isLoading = false
     var errorMessage: String?
     var userIntent: String = ""
-    var selectedApp: ApplicationToken?
+    // var selectedApp: ApplicationToken?  // Commented out for minimal build
     var selectedAppName: String = ""
     
     // Current decision
@@ -40,10 +41,12 @@ final class GatekeeperViewModel {
     ]
     
     init() {
-        loadActivePact()
-        loadTodayAttempts()
+        // MINIMAL BUILD - Initialization commented out
+        // loadActivePact()
+        // loadTodayAttempts()
     }
     
+    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     // MARK: - Request Access Flow
     
     func requestAccess(for appToken: ApplicationToken, appName: String) async {
@@ -191,4 +194,5 @@ final class GatekeeperViewModel {
         currentDecision = nil
         errorMessage = nil
     }
+    */
 }

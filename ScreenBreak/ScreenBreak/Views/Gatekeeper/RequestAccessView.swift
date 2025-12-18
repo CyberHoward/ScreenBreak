@@ -4,15 +4,17 @@
 //
 //  Main view for requesting access to blocked apps (Opal-style)
 //
+//  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import SwiftUI
-import FamilyControls
+// import FamilyControls  // Commented out for minimal build
 
 struct RequestAccessView: View {
-    @StateObject private var viewModel = GatekeeperViewModel()
-    @ObservedObject private var shieldService = ShieldManagementService.shared
-    @State private var showingIntentInput = false
-    @State private var selectedToken: ApplicationToken?
+    // MINIMAL BUILD - ViewModels commented out
+    // @StateObject private var viewModel = GatekeeperViewModel()
+    // @ObservedObject private var shieldService = ShieldManagementService.shared
+    // @State private var showingIntentInput = false
+    // @State private var selectedToken: ApplicationToken?
     
     var body: some View {
         NavigationView {
@@ -20,25 +22,32 @@ struct RequestAccessView: View {
                 Color("backgroundColor")
                     .ignoresSafeArea()
                 
-                if shieldService.shieldedApps.isEmpty {
-                    emptyState
-                } else {
-                    blockedAppsList
-                }
+                // MINIMAL BUILD - Show placeholder
+                placeholderState
             }
             .navigationTitle("Request Access")
-            .sheet(isPresented: $showingIntentInput) {
-                if let token = selectedToken {
-                    IntentInputView(
-                        viewModel: viewModel,
-                        appToken: token,
-                        isPresented: $showingIntentInput
-                    )
-                }
-            }
         }
     }
     
+    private var placeholderState: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "lock.shield")
+                .font(.system(size: 60))
+                .foregroundColor(.blue)
+            
+            Text("Gatekeeper Feature")
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            Text("Minimal build mode\nRe-enable FamilyControls to use this feature")
+                .font(.body)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
+    }
+    
+    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     private var emptyState: some View {
         VStack(spacing: 20) {
             Image(systemName: "checkmark.shield")
@@ -108,8 +117,10 @@ struct RequestAccessView: View {
             showingIntentInput = true
         }
     }
+    */
 }
 
+/* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
 // MARK: - Blocked App Card
 
 struct BlockedAppCard: View {
@@ -187,6 +198,7 @@ struct ActiveSessionCard: View {
         )
     }
 }
+*/
 
 #Preview {
     RequestAccessView()

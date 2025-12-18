@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MotivationInputView: View {
-    @Binding var viewModel: OnboardingViewModel
+    @Bindable var viewModel: OnboardingViewModel
     
     let commonMotivations = [
         "Better sleep",

@@ -9,7 +9,7 @@ import SwiftUI
 import RiveRuntime
 
 struct WelcomeView: View {
-    @Binding var viewModel: OnboardingViewModel
+    var viewModel: OnboardingViewModel
     
     var body: some View {
         ZStack {

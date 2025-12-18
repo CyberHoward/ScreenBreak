@@ -133,9 +133,10 @@ struct ConfigRestrictionsView: View {
             Text("Restricted Apps + Categories ").customFont(.title3)
             List {
                 Section {
-//                    ForEach(Array(MyModel.shared.savedSelection)){ entity in
-//                        Text(entity.name ?? "NO NAME")
-//                    }
+                    ForEach(Array(MyModel.shared.savedSelection)){ entity in
+                        Text(entity.name ?? "NO NAME")
+                    }
+                    /* COMMENTED OUT FOR MINIMAL BUILD - FamilyControls features
                     ForEach(Array(MyModel.shared.selectionToDiscourage.applicationTokens), id: \.self) {token in
                         HStack {
                             Label(token).customFont(.body)
@@ -145,6 +146,7 @@ struct ConfigRestrictionsView: View {
                     ForEach(Array(MyModel.shared.selectionToDiscourage.categoryTokens), id: \.self) {token in
                         Label(token).labelStyle(.iconOnly)
                     }
+                    */
                 }
                 
             }.background(Color(.clear))

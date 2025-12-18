@@ -15,15 +15,15 @@ struct OnboardingContainerView: View {
         ZStack {
             switch viewModel.currentStep {
             case .welcome:
-                WelcomeView(viewModel: $viewModel)
+                WelcomeView(viewModel: viewModel)
             case .motivation:
-                MotivationInputView(viewModel: $viewModel)
+                MotivationInputView(viewModel: viewModel)
             case .pactConfiguration:
-                PactConfigurationView(viewModel: $viewModel)
+                PactConfigurationView(viewModel: viewModel)
             case .shieldedApps:
-                ShieldedAppsSelectionView(viewModel: $viewModel)
+                ShieldedAppsSelectionView(viewModel: viewModel)
             case .confirmation:
-                PactConfirmationView(viewModel: $viewModel)
+                PactConfirmationView(viewModel: viewModel)
             case .completed:
                 Color.clear
                     .onAppear {
