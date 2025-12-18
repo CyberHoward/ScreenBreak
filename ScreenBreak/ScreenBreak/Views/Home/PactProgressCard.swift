@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PactProgressCard: View {
-    @ObservedObject var viewModel: HomeViewModel
+    @Bindable var viewModel: HomeViewModel
     
     var body: some View {
         VStack(spacing: 20) {
@@ -95,3 +95,4 @@ struct PactProgressCard: View {
         .shadow(color: Color("Shadow").opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
+

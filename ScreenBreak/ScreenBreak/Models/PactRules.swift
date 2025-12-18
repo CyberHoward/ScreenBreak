@@ -70,3 +70,5 @@ struct PactRules: Codable, Equatable {
         (quietHours?.endHour ?? 0) <= 23
     }
 }
+
+

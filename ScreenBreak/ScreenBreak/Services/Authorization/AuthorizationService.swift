@@ -23,13 +23,13 @@ final class AuthorizationService {
     }
     
     /// Check current authorization status
-    func checkAuthorizationStatus() -> AuthorizationCenter.AuthorizationStatus {
+    func checkAuthorizationStatus() -> AuthorizationStatus {
         return center.authorizationStatus
     }
     
     /// Check if we have authorization
     var isAuthorized: Bool {
-        return center.authorizationStatus == .approved
+        return checkAuthorizationStatus() == .approved
     }
     
     /// Revoke authorization (user must do this in Settings)
@@ -38,3 +38,4 @@ final class AuthorizationService {
         // This method is here for documentation purposes
     }
 }
+

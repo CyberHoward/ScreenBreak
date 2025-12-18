@@ -35,3 +35,5 @@ struct OnboardingContainerView: View {
         .animation(.easeInOut, value: viewModel.currentStep)
     }
 }
+
+

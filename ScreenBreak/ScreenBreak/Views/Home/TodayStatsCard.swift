@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TodayStatsCard: View {
-    @ObservedObject var viewModel: HomeViewModel
+    @Bindable var viewModel: HomeViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -124,3 +124,4 @@ struct StatRow: View {
         }
     }
 }
+

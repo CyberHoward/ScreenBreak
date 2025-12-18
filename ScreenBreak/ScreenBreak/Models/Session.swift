@@ -2,6 +2,14 @@
 //  Session.swift
 //  ScreenBreak
 //
+//  Created by Robin Bisschop on 17/12/2025.
+//
+
+
+//
+//  Session.swift
+//  ScreenBreak
+//
 //  Represents a time-boxed access session for a shielded app
 //
 
@@ -73,6 +81,30 @@ struct Session: Codable, Identifiable {
         self.isActive = isActive
     }
     
+    /// Convenience initializer with ApplicationToken
+    init(
+        id: UUID = UUID(),
+        appToken: ApplicationToken,
+        startTime: Date = Date(),
+        timeAllowedMinutes: Int,
+        intent: String,
+        aiDecision: String,
+        isActive: Bool = true
+    ) {
+        // Convert ApplicationToken to Data for storage
+        let data = try! NSKeyedArchiver.archivedData(withRootObject: appToken, requiringSecureCoding: true)
+        
+        self.init(
+            id: id,
+            appTokenData: data,
+            startTime: startTime,
+            timeAllowedMinutes: timeAllowedMinutes,
+            intent: intent,
+            aiDecision: aiDecision,
+            isActive: isActive
+        )
+    }
+    
     // MARK: - Methods
     
     mutating func end(actualMinutes: Int? = nil) {
@@ -90,27 +122,10 @@ struct Session: Codable, Identifiable {
 // MARK: - Helper for ApplicationToken conversion
 
 extension Session {
-    /// Initialize with ApplicationToken (convenience)
-    init(
-        appToken: ApplicationToken,
-        timeAllowedMinutes: Int,
-        intent: String,
-        aiDecision: String
-    ) {
-        // Convert ApplicationToken to Data for storage
-        // We can't decode the token, but we can store it as data
-        let data = try! NSKeyedArchiver.archivedData(withRootObject: appToken, requiringSecureCoding: true)
-        
-        self.init(
-            appTokenData: data,
-            timeAllowedMinutes: timeAllowedMinutes,
-            intent: intent,
-            aiDecision: aiDecision
-        )
-    }
-    
     /// Retrieve ApplicationToken from stored data
     func getApplicationToken() -> ApplicationToken? {
-        return try? NSKeyedUnarchiver.unarchivedObject(ofClass: ApplicationToken.self, from: appTokenData)
+        return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(appTokenData) as? ApplicationToken
     }
 }
+
+

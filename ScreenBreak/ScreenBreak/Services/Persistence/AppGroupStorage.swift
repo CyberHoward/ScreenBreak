@@ -67,3 +67,5 @@ final class AppGroupStorage {
         static let lastUpdateDate = "lastUpdateDate"
     }
 }
+
+

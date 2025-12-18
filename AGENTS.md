@@ -1,7 +1,6 @@
 # iOS Engineering Standards & Agentic Protocol:
 
-**Version:** 1.0
-**Context:** iOS 17+, Swift 5.9+, SwiftUI, Screen Time API (FamilyControls, ManagedSettings, DeviceActivity).
+**IMPORTANT Context:** iOS version 17+, Swift version 6+, SwiftUI, Screen Time API (FamilyControls, ManagedSettings, DeviceActivity).
 
 ---
 

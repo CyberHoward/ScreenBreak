@@ -9,7 +9,7 @@ import SwiftUI
 import FamilyControls
 
 struct ManageAppsView: View {
-    @ObservedObject var viewModel: SettingsViewModel
+    @Bindable var viewModel: SettingsViewModel
     @State private var showingPicker = false
     @State private var selection: FamilyActivitySelection
     @Environment(\.dismiss) private var dismiss
@@ -130,3 +130,4 @@ struct ManageAppsView: View {
         }
     }
 }
+

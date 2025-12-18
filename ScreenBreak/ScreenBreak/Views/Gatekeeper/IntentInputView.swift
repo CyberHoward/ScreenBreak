@@ -9,7 +9,7 @@ import SwiftUI
 import FamilyControls
 
 struct IntentInputView: View {
-    @ObservedObject var viewModel: GatekeeperViewModel
+    @Bindable var viewModel: GatekeeperViewModel
     let appToken: ApplicationToken
     @Binding var isPresented: Bool
     
@@ -207,3 +207,4 @@ struct IntentInputView: View {
         .padding()
     }
 }
+

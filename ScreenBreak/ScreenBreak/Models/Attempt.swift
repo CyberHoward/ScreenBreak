@@ -96,3 +96,5 @@ extension Array where Element == Attempt {
         today.compactMap { $0.minutesGranted }.reduce(0, +)
     }
 }
+
+

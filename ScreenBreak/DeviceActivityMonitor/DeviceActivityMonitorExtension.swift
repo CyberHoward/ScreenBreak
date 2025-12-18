@@ -5,6 +5,7 @@
 //  Monitors device activity and handles session expiration cleanup
 //
 
+import Foundation
 import DeviceActivity
 import FamilyControls
 import ManagedSettings
@@ -41,8 +42,8 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     // MARK: - Private Helpers
     
     private func loadShieldedApps() -> AppSelection? {
-        guard let suiteName = "group.com.screenbreak.shared",
-              let defaults = UserDefaults(suiteName: suiteName),
+        let suiteName = "group.com.screenbreak.shared"
+        guard let defaults = UserDefaults(suiteName: suiteName),
               let data = defaults.data(forKey: "shieldedApps") else {
             return nil
         }
@@ -74,11 +75,11 @@ struct AppSelection: Codable {
         var selection = FamilyActivitySelection()
         
         selection.applicationTokens = Set(applicationTokensData.compactMap { data in
-            try? NSKeyedUnarchiver.unarchivedObject(ofClass: ApplicationToken.self, from: data)
+            try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? ApplicationToken
         })
         
         selection.categoryTokens = Set(categoryTokensData.compactMap { data in
-            try? NSKeyedUnarchiver.unarchivedObject(ofClass: ActivityCategoryToken.self, from: data)
+            try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? ActivityCategoryToken
         })
         
         return selection

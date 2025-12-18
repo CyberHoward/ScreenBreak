@@ -40,11 +40,11 @@ struct AppSelection: Codable {
         var selection = FamilyActivitySelection()
         
         selection.applicationTokens = Set(applicationTokensData.compactMap { data in
-            try? NSKeyedUnarchiver.unarchivedObject(ofClass: ApplicationToken.self, from: data)
+            try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? ApplicationToken
         })
         
         selection.categoryTokens = Set(categoryTokensData.compactMap { data in
-            try? NSKeyedUnarchiver.unarchivedObject(ofClass: ActivityCategoryToken.self, from: data)
+            try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? ActivityCategoryToken
         })
         
         return selection
@@ -60,3 +60,5 @@ struct AppSelection: Codable {
         applicationTokensData.count + categoryTokensData.count
     }
 }
+
+
