@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PactConfigurationView: View {
-    @Binding var viewModel: OnboardingViewModel
+    var viewModel: OnboardingViewModel
     
     var body: some View {
         ZStack {

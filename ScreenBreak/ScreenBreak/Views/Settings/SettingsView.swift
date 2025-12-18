@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @StateObject private var viewModel = SettingsViewModel()
+    @State private var viewModel = SettingsViewModel()
     @State private var showingManageApps = false
     @State private var showingEndPactAlert = false
     
@@ -103,7 +103,8 @@ struct SettingsView: View {
                         }
                     }
                     
-                    // Authorization status
+                    // MINIMAL BUILD - Authorization status commented out
+                    /* Authorization status
                     Section("Permissions") {
                         HStack {
                             Label("Screen Time", systemImage: "hourglass")
@@ -118,8 +119,10 @@ struct SettingsView: View {
                                 .foregroundColor(.secondary)
                         }
                     }
+                    */
                     
-                    // Danger zone
+                    // MINIMAL BUILD - Danger zone commented out
+                    /* Danger zone
                     if viewModel.activePact != nil {
                         Section("Danger Zone") {
                             Button(role: .destructive, action: {
@@ -129,6 +132,7 @@ struct SettingsView: View {
                             }
                         }
                     }
+                    */
                     
                     // App info
                     Section("About") {
@@ -144,10 +148,11 @@ struct SettingsView: View {
                 .scrollContentBackground(.hidden)
             }
             .navigationTitle("Settings")
-            .sheet(isPresented: $showingManageApps) {
-                ManageAppsView(viewModel: viewModel)
-            }
-            .alert("End Pact Early?", isPresented: $showingEndPactAlert) {
+            // MINIMAL BUILD - ManageAppsView sheet commented out
+            // .sheet(isPresented: $showingManageApps) {
+            //     ManageAppsView(viewModel: viewModel)
+            // }
+            /* .alert("End Pact Early?", isPresented: $showingEndPactAlert) {
                 Button("Cancel", role: .cancel) {}
                 Button("End Pact", role: .destructive) {
                     Task {
@@ -157,6 +162,7 @@ struct SettingsView: View {
             } message: {
                 Text("This will end your current pact and remove all shields. Your progress will be lost.")
             }
+            */
         }
     }
 }

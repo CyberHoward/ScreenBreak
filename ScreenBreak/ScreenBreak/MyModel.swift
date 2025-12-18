@@ -4,22 +4,24 @@
 //
 //  Created by Christian Pichardo on 3/27/23.
 //
+//  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import Foundation
-import FamilyControls
-import ManagedSettings
+// import FamilyControls  // Commented out for minimal build
+// import ManagedSettings  // Commented out for minimal build
 import CoreData
 
 private let _MyModel = MyModel()
 
 class MyModel: ObservableObject {
+    // MINIMAL BUILD - Store commented out
     // Import ManagedSettings to get access to the application shield restriction
-    let store = ManagedSettingsStore()
+    // let store = ManagedSettingsStore()
     let container: NSPersistentContainer
     //@EnvironmentObject var store: ManagedSettingsStore
     
-    @Published var selectionToDiscourage: FamilyActivitySelection
-    @Published var selectionToEncourage: FamilyActivitySelection
+    // @Published var selectionToDiscourage: FamilyActivitySelection  // Commented out for minimal build
+    // @Published var selectionToEncourage: FamilyActivitySelection  // Commented out for minimal build
     @Published var savedSelection: [AppEntity] = []
     
     init() {
@@ -32,8 +34,9 @@ class MyModel: ObservableObject {
             }
             
         }
-        selectionToDiscourage = FamilyActivitySelection()
-        selectionToEncourage = FamilyActivitySelection()
+        // MINIMAL BUILD - FamilyActivitySelection initialization commented out
+        // selectionToDiscourage = FamilyActivitySelection()
+        // selectionToEncourage = FamilyActivitySelection()
         fetchApps()
     }
     
@@ -73,6 +76,7 @@ class MyModel: ObservableObject {
         return _MyModel
     }
     
+    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     func setShieldRestrictions() {
         // Pull the selection out of the app's model and configure the application shield restriction accordingly
         let applications = MyModel.shared.selectionToDiscourage
@@ -81,4 +85,5 @@ class MyModel: ObservableObject {
         ? nil
         : ShieldSettings.ActivityCategoryPolicy.specific(applications.categoryTokens)
     }
+    */
 }

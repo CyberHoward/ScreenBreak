@@ -11,7 +11,8 @@ import Observation
 @Observable
 @MainActor
 final class HomeViewModel {
-    private let storage = AppGroupStorage.shared
+    // MINIMAL BUILD - Some services may be disabled
+    // private let storage = AppGroupStorage.shared  // Commented out for minimal build
     private let shieldService = ShieldManagementService.shared
     
     // State
@@ -27,11 +28,12 @@ final class HomeViewModel {
     // MARK: - Data Loading
     
     func loadData() {
-        activePact = try? storage.load(Pact.self, forKey: AppGroupStorage.Keys.activePact)
+        // MINIMAL BUILD - Storage loading may not work
+        // activePact = try? storage.load(Pact.self, forKey: AppGroupStorage.Keys.activePact)
         
-        if let attempts = try? storage.load([Attempt].self, forKey: AppGroupStorage.Keys.todayAttempts) {
-            todayAttempts = attempts.today
-        }
+        // if let attempts = try? storage.load([Attempt].self, forKey: AppGroupStorage.Keys.todayAttempts) {
+        //     todayAttempts = attempts.today
+        // }
         
         activeSessions = shieldService.activeSessions
     }

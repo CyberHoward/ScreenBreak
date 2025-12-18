@@ -4,27 +4,38 @@
 //
 //  Service for managing app shields and temporary access
 //
+//  MINIMAL BUILD VERSION - Full implementation commented out
 
 import Foundation
-import FamilyControls
-import ManagedSettings
+// import FamilyControls  // Commented out for minimal build
+// import ManagedSettings  // Commented out for minimal build
 
 final class ShieldManagementService: ObservableObject {
     static let shared = ShieldManagementService()
     
-    private let store: ManagedSettingsStore
-    private let storage = AppGroupStorage.shared
+    // private let store: ManagedSettingsStore  // Commented out for minimal build
+    // private let storage = AppGroupStorage.shared  // Commented out for minimal build
     
-    @Published private(set) var shieldedApps: AppSelection = AppSelection()
+    // @Published private(set) var shieldedApps: AppSelection = AppSelection()  // Commented out for minimal build
     @Published private(set) var activeSessions: [Session] = []
     
     private init() {
+        // MINIMAL BUILD - Initialization commented out
         // Use a named store to avoid conflicts
-        self.store = ManagedSettingsStore(named: ManagedSettingsStore.Name("ScreenBreakStore"))
-        loadShieldedApps()
-        loadActiveSessions()
+        // self.store = ManagedSettingsStore(named: ManagedSettingsStore.Name("ScreenBreakStore"))
+        // loadShieldedApps()
+        // loadActiveSessions()
     }
     
+    // MARK: - Minimal Build Stubs
+    
+    /// Check for expired sessions and clean them up (stub for minimal build)
+    func checkExpiredSessions() {
+        // MINIMAL BUILD - Stub implementation
+        // This will be implemented when FamilyControls is re-enabled
+    }
+    
+    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     // MARK: - Shield Configuration
     
     /// Activate shield for selected apps
@@ -163,6 +174,7 @@ final class ShieldManagementService: ObservableObject {
             activeSessions = saved.filter { $0.isActive && !$0.hasExpired }
         }
     }
+    */
 }
 
 

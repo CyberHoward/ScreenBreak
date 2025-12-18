@@ -4,17 +4,18 @@
 //
 //  ViewModel for settings management
 //
+//  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import Foundation
-import FamilyControls
+// import FamilyControls  // Commented out for minimal build
 import Observation
 
 @Observable
 @MainActor
 final class SettingsViewModel {
-    private let storage = AppGroupStorage.shared
+    // private let storage = AppGroupStorage.shared  // Commented out for minimal build
     private let shieldService = ShieldManagementService.shared
-    private let authService = AuthorizationService.shared
+    // private let authService = AuthorizationService.shared  // Commented out for minimal build
     
     var activePact: Pact?
     var shieldedApps: AppSelection
@@ -22,10 +23,13 @@ final class SettingsViewModel {
     var errorMessage: String?
     
     init() {
-        activePact = try? storage.load(Pact.self, forKey: AppGroupStorage.Keys.activePact)
-        shieldedApps = shieldService.shieldedApps
+        // MINIMAL BUILD - Storage initialization commented out
+        // activePact = try? storage.load(Pact.self, forKey: AppGroupStorage.Keys.activePact)
+        // shieldedApps = shieldService.shieldedApps
+        shieldedApps = AppSelection()
     }
     
+    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     // MARK: - App Management
     
     func updateShieldedApps(_ selection: FamilyActivitySelection) {
@@ -37,7 +41,9 @@ final class SettingsViewModel {
         shieldService.deactivateShield()
         shieldedApps = AppSelection()
     }
+    */
     
+    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     // MARK: - Pact Management
     
     func endPact() async {
@@ -82,6 +88,7 @@ final class SettingsViewModel {
     var isAuthorized: Bool {
         authService.isAuthorized
     }
+    */
     
     enum SettingsError: LocalizedError {
         case noPactActive

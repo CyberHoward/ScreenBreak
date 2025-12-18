@@ -44,10 +44,11 @@ struct HomeView: View {
                 // Today's stats
                 TodayStatsCard(viewModel: viewModel)
                 
+                // MINIMAL BUILD - ActiveSessionsCard commented out
                 // Active sessions
-                if !viewModel.activeSessions.isEmpty {
-                    ActiveSessionsCard(sessions: viewModel.activeSessions)
-                }
+                // if !viewModel.activeSessions.isEmpty {
+                //     ActiveSessionsCard(sessions: viewModel.activeSessions)
+                // }
                 
                 // Quick actions
                 QuickActionsCard(showingRequestAccess: $showingRequestAccess)

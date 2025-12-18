@@ -9,7 +9,7 @@ import SwiftUI
 import RiveRuntime
 
 struct PactConfirmationView: View {
-    @Binding var viewModel: OnboardingViewModel
+    var viewModel: OnboardingViewModel
     @State private var showingShieldExplanation = false
     
     var body: some View {
@@ -65,9 +65,11 @@ struct PactConfirmationView: View {
             Spacer()
             
             Button(action: {
-                Task {
-                    await viewModel.requestAuthorization()
-                }
+                // MINIMAL BUILD - Authorization commented out
+                // Task {
+                //     await viewModel.requestAuthorization()
+                // }
+                viewModel.isAuthorized = true
             }) {
                 Text("Grant Permission")
                     .font(.headline)
@@ -126,11 +128,12 @@ struct PactConfirmationView: View {
                     value: "\(viewModel.pactDuration) days"
                 )
                 
-                SummaryRow(
-                    icon: "apps.iphone",
-                    title: "Shielded Apps",
-                    value: "\(viewModel.selectedApps.applicationTokens.count) apps"
-                )
+                // MINIMAL BUILD - selectedApps commented out
+                // SummaryRow(
+                //     icon: "apps.iphone",
+                //     title: "Shielded Apps",
+                //     value: "\(viewModel.selectedApps.applicationTokens.count) apps"
+                // )
                 
                 SummaryRow(
                     icon: "clock",
@@ -164,9 +167,11 @@ struct PactConfirmationView: View {
             Spacer()
             
             Button(action: {
-                Task {
-                    try? await viewModel.createPact()
-                }
+                // MINIMAL BUILD - createPact commented out
+                // Task {
+                //     try? await viewModel.createPact()
+                // }
+                viewModel.nextStep()
             }) {
                 Text("Start My Pact")
                     .font(.headline)
