@@ -11,7 +11,7 @@ final class AppGroupStorage {
     static let shared = AppGroupStorage()
     
     // App Group identifier shared across main app and extensions
-    private let appGroupIdentifier = "group.com.screenbreak.shared"
+    private let appGroupIdentifier = "group.com.ohmroger.screenbreak"
     
     // Shared UserDefaults
     private(set) lazy var userDefaults: UserDefaults = {
@@ -67,6 +67,7 @@ final class AppGroupStorage {
         static let lastUpdateDate = "lastUpdateDate"
     }
 }
+
 
 
 

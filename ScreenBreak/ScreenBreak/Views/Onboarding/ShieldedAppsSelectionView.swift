@@ -10,7 +10,7 @@ import FamilyControls
 import ManagedSettings
 
 struct ShieldedAppsSelectionView: View {
-    var viewModel: OnboardingViewModel
+    @Bindable var viewModel: OnboardingViewModel
     @State private var showingPicker = false
     
     var body: some View {
