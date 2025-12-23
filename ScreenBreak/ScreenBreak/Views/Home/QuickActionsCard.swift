@@ -90,7 +90,6 @@ struct ActionButton: View {
     }
 }
 
-/* COMMENTED OUT FOR MINIMAL BUILD - Depends on MiniSessionTimerView which is disabled
 struct ActiveSessionsCard: View {
     let sessions: [Session]
     
@@ -110,7 +109,4 @@ struct ActiveSessionsCard: View {
         .shadow(color: Color("Shadow").opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
-*/
-
-
 

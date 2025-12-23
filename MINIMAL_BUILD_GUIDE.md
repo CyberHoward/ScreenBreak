@@ -1,132 +1,90 @@
 # Minimal Build Guide
 
-This document tracks what features have been temporarily disabled to create a minimal buildable version of the ScreenBreak app.
+This document previously tracked what features were temporarily disabled to create a minimal buildable version of the ScreenBreak app.
 
-## Purpose
+## Current Status: ✅ FULLY RE-ENABLED
 
-The main app build was failing due to `ApplicationToken` not being found in scope. This minimal build comments out all FamilyControls-dependent code so you can:
+All FamilyControls and ManagedSettings features have been re-enabled as of the latest update.
 
-1. Get the basic app structure compiling
-2. Test the UI without Screen Time API features
-3. Gradually re-enable features as you fix framework configuration
+## Files Updated
 
-## What's Been Disabled
+The following files have been updated to include full FamilyControls functionality:
 
 ### Core Models
-- **Session.swift** - ApplicationToken initializer and converter methods
-- **AppSelection.swift** - FamilyActivitySelection conversion methods
+- **Session.swift** - Full ApplicationToken support with `import ManagedSettings`
+- **AppSelection.swift** - Full FamilyActivitySelection conversion with `import FamilyControls` and `import ManagedSettings`
 
 ### Services
-- **ShieldManagementService.swift** - All shield and session management methods
-- **AuthorizationService.swift** - All authorization methods
-- **SessionMonitorService.swift** - Working but depends on disabled services
+- **ShieldManagementService.swift** - Full shield and session management with `import FamilyControls` and `import ManagedSettings`
+- **AuthorizationService.swift** - Full authorization methods with `import FamilyControls`
 
 ### ViewModels
-- **GatekeeperViewModel.swift** - All access request and AI decision logic
-- **OnboardingViewModel.swift** - Authorization and pact creation methods
-- **SettingsViewModel.swift** - App management and authorization methods
+- **GatekeeperViewModel.swift** - Full access request and AI decision logic with `import FamilyControls` and `import ManagedSettings`
+- **OnboardingViewModel.swift** - Full authorization and pact creation methods with `import FamilyControls` and `import ManagedSettings`
+- **SettingsViewModel.swift** - Full app management and authorization methods with `import FamilyControls` and `import ManagedSettings`
+- **HomeViewModel.swift** - Full storage features
 
 ### Views
-- **RequestAccessView.swift** - Shows placeholder instead of blocked apps
-- **IntentInputView.swift** - Shows placeholder
-- **SessionTimerView.swift** - App token display commented out
-- **MiniSessionTimerView** - Entire component commented out
-- **FamilyPickerView.swift** - Shows placeholder
-- **ShieldedAppsSelectionView.swift** - Shows placeholder instead of picker
-- **ManageAppsView.swift** - Shows placeholder
-- **BlockedAppCard** - Entire component commented out
-- **ActiveSessionCard** - Entire component commented out
+- **RequestAccessView.swift** - Full blocked apps list and session cards with `import FamilyControls` and `import ManagedSettings`
+- **IntentInputView.swift** - Full intent form with `import FamilyControls` and `import ManagedSettings`
+- **SessionTimerView.swift** - Full app token display and MiniSessionTimerView with `import FamilyControls` and `import ManagedSettings`
+- **FamilyPickerView.swift** - Full FamilyActivityPicker implementation with `import FamilyControls` and `import ManagedSettings`
+- **ShieldedAppsSelectionView.swift** - Full app picker with `import FamilyControls` and `import ManagedSettings`
+- **PactConfirmationView.swift** - Full authorization and createPact functionality
+- **ManageAppsView.swift** - Full app management with `import FamilyControls` and `import ManagedSettings`
+- **SettingsView.swift** - Full ManageAppsView sheet and danger zone
+- **RestrictionView.swift** - Full FamilyControls features with `import FamilyControls` and `import ManagedSettings`
+- **ConfigRestrictionsView.swift** - Full FamilyControls features with `import FamilyControls`
+- **HomeView.swift** - Full ActiveSessionsCard
+- **QuickActionsCard.swift** - Full ActiveSessionsCard component
+- **ContentView.swift** - Full imports with `import FamilyControls` and `import ManagedSettings`
 
 ### App Initialization
-- **ScreenBreakApp.swift** - Service initialization commented out
-- **MyModel.swift** - FamilyActivitySelection properties and methods commented out
+- **ScreenBreakApp.swift** - Full service initialization with `import FamilyControls` and `import ManagedSettings`
+- **MyModel.swift** - Full FamilyActivitySelection properties and methods with `import FamilyControls` and `import ManagedSettings`
+- **MySchedule.swift** - Full shield restrictions and events
 
-## How Features Appear in Minimal Build
+## Important Notes
 
-1. **Home Tab** - Should work (basic UI)
-2. **Gatekeeper Tab** - Shows "Feature disabled in minimal build" placeholder
-3. **Settings Tab** - Should work but app management features disabled
-4. **Insights Tab** - Should work (if not dependent on blocked apps)
-5. **Onboarding** - Partially works, app selection step shows placeholder
+### Import Requirements for ApplicationToken
 
-## Re-enabling Features
+When using `ApplicationToken` in Swift files, you **must** include:
 
-To re-enable features after fixing the FamilyControls framework configuration:
-
-### Step 1: Fix Framework Configuration
-1. Ensure FamilyControls framework is properly linked in Xcode
-2. Check that entitlements include Family Controls capability
-3. Verify deployment target is iOS 16+ (or 15+ depending on API version)
-
-### Step 2: Search and Uncomment
-Search for these markers in your codebase:
-- `// Commented out for minimal build`
-- `/* COMMENTED OUT FOR MINIMAL BUILD`
-- `// MINIMAL BUILD`
-
-### Step 3: Re-enable in Order
-
-1. **Core Models First**
-   - Uncomment Session.swift ApplicationToken methods
-   - Uncomment AppSelection.swift conversion methods
-   
-2. **Services Next**
-   - Uncomment AuthorizationService
-   - Uncomment ShieldManagementService
-   
-3. **ViewModels**
-   - Uncomment GatekeeperViewModel
-   - Uncomment OnboardingViewModel authorization methods
-   - Uncomment SettingsViewModel
-   
-4. **Views Last**
-   - Uncomment RequestAccessView
-   - Uncomment IntentInputView
-   - Uncomment SessionTimerView
-   - Uncomment other gatekeeper views
-   - Uncomment onboarding views
-   - Uncomment settings views
-   
-5. **App Initialization**
-   - Uncomment service initialization in ScreenBreakApp.swift
-
-### Step 4: Incremental Testing
-After uncommenting each section:
-1. Build the project
-2. Fix any compilation errors
-3. Test the feature
-4. Move to next section
-
-## Files Modified
-
-All modified files are marked with:
 ```swift
-//  MINIMAL BUILD VERSION - FamilyControls features commented out
+import ManagedSettings
 ```
 
-You can search for this string to find all files that need attention.
+This is because `ApplicationToken` is defined in the ManagedSettings framework, not FamilyControls.
 
-## Common Issues to Watch For
+### Common Imports Pattern
 
-1. **Import statements** - Remember to uncomment `import FamilyControls` and `import ManagedSettings`
-2. **Property initialization** - Some properties that depend on FamilyControls are commented out
-3. **Method calls** - Views that call disabled methods will need to be updated
-4. **Bindings** - Some @Binding properties are commented out and will need view updates
+Most files that interact with Screen Time features need:
 
-## Testing Minimal Build
+```swift
+import FamilyControls
+import ManagedSettings
+```
 
-The minimal build should:
-- ✅ Compile successfully
-- ✅ Launch without crashing
-- ✅ Show basic UI
-- ✅ Navigate between tabs
-- ⚠️ Show placeholders for disabled features
-- ❌ Not access Screen Time API
+### Entitlements
 
-## Next Steps
+Ensure your app has the following entitlements configured in Xcode:
+- Family Controls capability
+- App Groups (for extension communication)
 
-1. Build and verify the minimal version compiles
-2. Fix the underlying FamilyControls framework issue
-3. Re-enable features one section at a time
-4. Test incrementally as you re-enable features
+### Deployment Target
+
+The app requires iOS 16+ for full FamilyControls support.
+
+## Testing the Full Build
+
+The full build should:
+- ✅ Compile successfully with all FamilyControls features
+- ✅ Launch and request Screen Time authorization
+- ✅ Allow app selection via FamilyActivityPicker
+- ✅ Apply shields to selected apps
+- ✅ Show blocked apps list with request access functionality
+- ✅ Track and display active sessions
+- ✅ Support the AI Gatekeeper flow
+- ✅ Full onboarding with authorization and pact creation
+- ✅ Full settings with app management and pact controls
 

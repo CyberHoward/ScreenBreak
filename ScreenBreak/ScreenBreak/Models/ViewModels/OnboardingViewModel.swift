@@ -4,19 +4,19 @@
 //
 //  ViewModel for onboarding flow
 //
-//  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import Foundation
-// import FamilyControls  // Commented out for minimal build
+import FamilyControls
+import ManagedSettings
 import Observation
 
 @Observable
 @MainActor
 final class OnboardingViewModel {
     // Services
-    // private let authService = AuthorizationService.shared  // Commented out for minimal build
+    private let authService = AuthorizationService.shared
     private let shieldService = ShieldManagementService.shared
-    // private let storage = AppGroupStorage.shared  // Commented out for minimal build
+    private let storage = AppGroupStorage.shared
     
     // Onboarding state
     var currentStep: OnboardingStep = .welcome
@@ -26,7 +26,7 @@ final class OnboardingViewModel {
     // User inputs
     var motivation: String = ""
     var pactDuration: Int = 14
-    // var selectedApps = FamilyActivitySelection()  // Commented out for minimal build
+    var selectedApps = FamilyActivitySelection()
     var rules = PactRules.defaultRules
     
     // Authorization status
@@ -63,9 +63,7 @@ final class OnboardingViewModel {
         case .pactConfiguration:
             return rules.isValid
         case .shieldedApps:
-            // MINIMAL BUILD - Always allow proceeding
-            return true
-            // return !selectedApps.applicationTokens.isEmpty || !selectedApps.categoryTokens.isEmpty
+            return !selectedApps.applicationTokens.isEmpty || !selectedApps.categoryTokens.isEmpty
         case .confirmation:
             return true
         case .completed:
@@ -73,7 +71,6 @@ final class OnboardingViewModel {
         }
     }
     
-    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     // MARK: - Authorization
     
     func requestAuthorization() async {
@@ -114,7 +111,6 @@ final class OnboardingViewModel {
         // Move to completed
         currentStep = .completed
     }
-    */
     
     // MARK: - Preset Configurations
     

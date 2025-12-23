@@ -4,14 +4,14 @@
 //
 //  Screen for selecting apps to shield
 //
-//  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import SwiftUI
-// import FamilyControls  // Commented out for minimal build
+import FamilyControls
+import ManagedSettings
 
 struct ShieldedAppsSelectionView: View {
     var viewModel: OnboardingViewModel
-    // @State private var showingPicker = false  // Commented out for minimal build
+    @State private var showingPicker = false
     
     var body: some View {
         ZStack {
@@ -38,24 +38,6 @@ struct ShieldedAppsSelectionView: View {
                 }
                 .padding(.top, 40)
                 
-                // MINIMAL BUILD - Show placeholder instead of picker
-                VStack(spacing: 16) {
-                    Image(systemName: "exclamationmark.triangle")
-                        .font(.system(size: 40))
-                        .foregroundColor(.orange)
-                    
-                    Text("Feature temporarily disabled")
-                        .font(.headline)
-                    
-                    Text("App selection requires FamilyControls framework")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 40)
-                
-                /* COMMENTED OUT FOR MINIMAL BUILD
                 // Selected apps display
                 if !viewModel.selectedApps.applicationTokens.isEmpty || !viewModel.selectedApps.categoryTokens.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
@@ -114,7 +96,6 @@ struct ShieldedAppsSelectionView: View {
                 }
                 .padding(.horizontal)
                 .familyActivityPicker(isPresented: $showingPicker, selection: $viewModel.selectedApps)
-                */
                 
                 // Authorization note
                 VStack(spacing: 8) {
@@ -169,5 +150,3 @@ struct ShieldedAppsSelectionView: View {
         }
     }
 }
-
-

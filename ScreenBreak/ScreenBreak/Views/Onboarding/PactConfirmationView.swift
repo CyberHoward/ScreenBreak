@@ -65,11 +65,9 @@ struct PactConfirmationView: View {
             Spacer()
             
             Button(action: {
-                // MINIMAL BUILD - Authorization commented out
-                // Task {
-                //     await viewModel.requestAuthorization()
-                // }
-                viewModel.isAuthorized = true
+                Task {
+                    await viewModel.requestAuthorization()
+                }
             }) {
                 Text("Grant Permission")
                     .font(.headline)
@@ -128,12 +126,11 @@ struct PactConfirmationView: View {
                     value: "\(viewModel.pactDuration) days"
                 )
                 
-                // MINIMAL BUILD - selectedApps commented out
-                // SummaryRow(
-                //     icon: "apps.iphone",
-                //     title: "Shielded Apps",
-                //     value: "\(viewModel.selectedApps.applicationTokens.count) apps"
-                // )
+                SummaryRow(
+                    icon: "apps.iphone",
+                    title: "Shielded Apps",
+                    value: "\(viewModel.selectedApps.applicationTokens.count) apps"
+                )
                 
                 SummaryRow(
                     icon: "clock",
@@ -167,11 +164,9 @@ struct PactConfirmationView: View {
             Spacer()
             
             Button(action: {
-                // MINIMAL BUILD - createPact commented out
-                // Task {
-                //     try? await viewModel.createPact()
-                // }
-                viewModel.nextStep()
+                Task {
+                    try? await viewModel.createPact()
+                }
             }) {
                 Text("Start My Pact")
                     .font(.headline)
@@ -241,5 +236,3 @@ struct SummaryRow: View {
         }
     }
 }
-
-

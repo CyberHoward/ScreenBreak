@@ -4,7 +4,6 @@
 //
 //  Wrapper for FamilyActivitySelection with Codable support
 //
-//  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import Foundation
 import ManagedSettings
@@ -62,6 +61,7 @@ struct AppSelection: Codable {
         applicationTokensData.count + categoryTokensData.count
     }
 }
+
 
 
 

@@ -4,14 +4,14 @@
 //
 //  View showing active session timer
 //
-//  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import SwiftUI
-// import FamilyControls  // Commented out for minimal build
+import FamilyControls
+import ManagedSettings
 
 struct SessionTimerView: View {
     let session: Session
-    // @ObservedObject private var sessionMonitor = SessionMonitorService.shared  // Commented out for minimal build
+    @ObservedObject private var sessionMonitor = SessionMonitorService.shared
     @State private var timeRemaining: Int
     @State private var timer: Timer?
     
@@ -22,8 +22,6 @@ struct SessionTimerView: View {
     
     var body: some View {
         VStack(spacing: 24) {
-            // MINIMAL BUILD - App token display commented out
-            /* 
             // App info
             if let appToken = session.getApplicationToken() {
                 VStack(spacing: 12) {
@@ -37,7 +35,6 @@ struct SessionTimerView: View {
                         .fontWeight(.semibold)
                 }
             }
-            */
             
             // Timer display
             ZStack {
@@ -125,7 +122,6 @@ struct SessionTimerView: View {
 
 // MARK: - Mini Timer Widget
 
-/* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
 struct MiniSessionTimerView: View {
     let session: Session
     @State private var timeRemaining: Int
@@ -165,7 +161,6 @@ struct MiniSessionTimerView: View {
         .cornerRadius(12)
     }
 }
-*/
 
 #Preview {
     SessionTimerView(
@@ -177,6 +172,4 @@ struct MiniSessionTimerView: View {
         )
     )
 }
-
-
 

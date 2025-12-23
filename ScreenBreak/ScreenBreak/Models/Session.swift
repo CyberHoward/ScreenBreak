@@ -4,15 +4,8 @@
 //
 //  Created by Robin Bisschop on 17/12/2025.
 //
-
-
-//
-//  Session.swift
-//  ScreenBreak
-//
 //  Represents a time-boxed access session for a shielded app
 //
-//  MINIMAL BUILD VERSION - Full implementation commented out
 
 import FamilyControls
 import ManagedSettings
@@ -129,6 +122,7 @@ extension Session {
         return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(appTokenData) as? ApplicationToken
     }
 }
+
 
 
 

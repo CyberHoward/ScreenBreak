@@ -77,8 +77,7 @@ class MySchedule {
         
         print("END TIME: \(endHour):\(endMins)")
         
-        // MINIMAL BUILD - Shield restrictions commented out
-        // MyModel.shared.setShieldRestrictions()
+        MyModel.shared.setShieldRestrictions()
         
         
         let schedule = DeviceActivitySchedule(
@@ -92,13 +91,12 @@ class MySchedule {
 
 
         
-        // MINIMAL BUILD - Events commented out (requires FamilyControls)
         // Threshold doesnt really matter for right now?
-        let events: [DeviceActivityEvent.Name: DeviceActivityEvent] = [:
-            // .discouraged: DeviceActivityEvent(
-            //     applications: MyModel.shared.selectionToDiscourage.applicationTokens,
-            //     threshold: DateComponents(second: 15)
-            // )
+        let events: [DeviceActivityEvent.Name: DeviceActivityEvent] = [
+            .discouraged: DeviceActivityEvent(
+                applications: MyModel.shared.selectionToDiscourage.applicationTokens,
+                threshold: DateComponents(second: 15)
+            )
         ]
         
         // Create a Device Activity center

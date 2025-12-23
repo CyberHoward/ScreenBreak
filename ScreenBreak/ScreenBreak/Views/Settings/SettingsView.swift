@@ -103,8 +103,7 @@ struct SettingsView: View {
                         }
                     }
                     
-                    // MINIMAL BUILD - Authorization status commented out
-                    /* Authorization status
+                    // Authorization status
                     Section("Permissions") {
                         HStack {
                             Label("Screen Time", systemImage: "hourglass")
@@ -119,10 +118,8 @@ struct SettingsView: View {
                                 .foregroundColor(.secondary)
                         }
                     }
-                    */
                     
-                    // MINIMAL BUILD - Danger zone commented out
-                    /* Danger zone
+                    // Danger zone
                     if viewModel.activePact != nil {
                         Section("Danger Zone") {
                             Button(role: .destructive, action: {
@@ -132,7 +129,6 @@ struct SettingsView: View {
                             }
                         }
                     }
-                    */
                     
                     // App info
                     Section("About") {
@@ -148,11 +144,10 @@ struct SettingsView: View {
                 .scrollContentBackground(.hidden)
             }
             .navigationTitle("Settings")
-            // MINIMAL BUILD - ManageAppsView sheet commented out
-            // .sheet(isPresented: $showingManageApps) {
-            //     ManageAppsView(viewModel: viewModel)
-            // }
-            /* .alert("End Pact Early?", isPresented: $showingEndPactAlert) {
+            .sheet(isPresented: $showingManageApps) {
+                ManageAppsView(viewModel: viewModel)
+            }
+            .alert("End Pact Early?", isPresented: $showingEndPactAlert) {
                 Button("Cancel", role: .cancel) {}
                 Button("End Pact", role: .destructive) {
                     Task {
@@ -162,7 +157,6 @@ struct SettingsView: View {
             } message: {
                 Text("This will end your current pact and remove all shields. Your progress will be lost.")
             }
-            */
         }
     }
 }
@@ -170,5 +164,3 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
 }
-
-

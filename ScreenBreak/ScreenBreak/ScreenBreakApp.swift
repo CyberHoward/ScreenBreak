@@ -4,12 +4,11 @@
 //
 //  Main app entry point
 //
-//  MINIMAL BUILD VERSION - FamilyControls imports commented out
 
 import SwiftUI
 import DeviceActivity
-// import FamilyControls  // Commented out for minimal build
-// import ManagedSettings  // Commented out for minimal build
+import FamilyControls
+import ManagedSettings
 
 @main
 struct ScreenBreakApp: App {
@@ -35,10 +34,9 @@ struct ScreenBreakApp: App {
             }
             .environmentObject(launchScreenManager)
             .onAppear {
-                // MINIMAL BUILD - Service initialization commented out
                 // Initialize services
-                // _ = ShieldManagementService.shared
-                // _ = SessionMonitorService.shared
+                _ = ShieldManagementService.shared
+                _ = SessionMonitorService.shared
                 
                 // Small delay to show launch screen
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

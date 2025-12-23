@@ -9,6 +9,7 @@ import SwiftUI
 import UserNotifications
 import ManagedSettings
 import WidgetKit
+import FamilyControls
 
 struct ConfigRestrictionsView: View {
     @ObservedObject var restrictionModel = MyRestrictionModel()
@@ -136,7 +137,6 @@ struct ConfigRestrictionsView: View {
                     ForEach(Array(MyModel.shared.savedSelection)){ entity in
                         Text(entity.name ?? "NO NAME")
                     }
-                    /* COMMENTED OUT FOR MINIMAL BUILD - FamilyControls features
                     ForEach(Array(MyModel.shared.selectionToDiscourage.applicationTokens), id: \.self) {token in
                         HStack {
                             Label(token).customFont(.body)
@@ -146,7 +146,6 @@ struct ConfigRestrictionsView: View {
                     ForEach(Array(MyModel.shared.selectionToDiscourage.categoryTokens), id: \.self) {token in
                         Label(token).labelStyle(.iconOnly)
                     }
-                    */
                 }
                 
             }.background(Color(.clear))

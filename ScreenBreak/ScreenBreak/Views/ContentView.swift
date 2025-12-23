@@ -4,13 +4,12 @@
 //
 //  Main app container
 //
-//  MINIMAL BUILD VERSION - FamilyControls imports commented out
 
 import SwiftUI
 import CoreData
-// import FamilyControls  // Commented out for minimal build
+import FamilyControls
 import RiveRuntime
-// import ManagedSettings  // Commented out for minimal build
+import ManagedSettings
 
 
 struct ContentView: View {

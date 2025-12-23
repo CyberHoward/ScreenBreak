@@ -4,24 +4,21 @@
 //
 //  View for managing shielded apps
 //
-//  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import SwiftUI
-// import FamilyControls  // Commented out for minimal build
+import FamilyControls
+import ManagedSettings
 
 struct ManageAppsView: View {
-    // MINIMAL BUILD - Properties commented out
-    // @Bindable var viewModel: SettingsViewModel
-    // @State private var showingPicker = false
-    // @State private var selection: FamilyActivitySelection
+    @Bindable var viewModel: SettingsViewModel
+    @State private var showingPicker = false
+    @State private var selection: FamilyActivitySelection
     @Environment(\.dismiss) private var dismiss
     
-    /* COMMENTED OUT FOR MINIMAL BUILD
     init(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
         _selection = State(initialValue: viewModel.shieldedApps.toFamilyActivitySelection())
     }
-    */
     
     var body: some View {
         NavigationView {
@@ -29,24 +26,6 @@ struct ManageAppsView: View {
                 Color("backgroundColor")
                     .ignoresSafeArea()
                 
-                // MINIMAL BUILD - Show placeholder
-                VStack(spacing: 20) {
-                    Image(systemName: "exclamationmark.triangle")
-                        .font(.system(size: 60))
-                        .foregroundColor(.orange)
-                    
-                    Text("Feature Disabled")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    
-                    Text("Manage Apps requires FamilyControls\nRe-enable in the full build")
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                }
-                .padding()
-                
-                /* COMMENTED OUT FOR MINIMAL BUILD
                 VStack(spacing: 20) {
                     // Header
                     VStack(spacing: 8) {
@@ -139,7 +118,6 @@ struct ManageAppsView: View {
                     }
                     .padding()
                 }
-                */
             }
             .navigationTitle("Manage Apps")
             .navigationBarTitleDisplayMode(.inline)
@@ -153,4 +131,3 @@ struct ManageAppsView: View {
         }
     }
 }
-

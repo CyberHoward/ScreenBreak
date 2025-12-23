@@ -7,6 +7,8 @@
 
 import SwiftUI
 import WidgetKit
+import FamilyControls
+import ManagedSettings
 
 struct RestrictionView: View {
     @Environment(\.dismiss) var dismiss
@@ -36,7 +38,6 @@ struct RestrictionView: View {
                     }.frame(maxWidth: .infinity, alignment: .leading)
                     HStack{
                         Button("Start Restrictions") {
-                            /* COMMENTED OUT FOR MINIMAL BUILD - FamilyControls features
                             if(MyModel.shared.selectionToDiscourage.applicationTokens.count == 0 && MyModel.shared.selectionToDiscourage.categoryTokens.count == 0) {
                                 noAppsAlert = true
                                 maxAppsAlert = false
@@ -44,18 +45,15 @@ struct RestrictionView: View {
                                 noAppsAlert = false
                                 maxAppsAlert = true
                             } else {
-                            */
                                 noAppsAlert = false
                                 maxAppsAlert = false
                                 UserDefaults.standard.set(true, forKey: "inRestrictionMode")
                                 UserDefaults(suiteName:"group.ChristianPichardo.ScreenBreak")!.set(true, forKey:"widgetInRestrictionMode")
-                                /* COMMENTED OUT FOR MINIMAL BUILD - FamilyControls features
                                 print("APPS SELECTED : \(MyModel.shared.selectionToDiscourage.applications.count)")
                                 for i in MyModel.shared.selectionToDiscourage.applications {
                                     print(i)
                                     MyModel.shared.addApp(name:i.localizedDisplayName ?? "Temp")
                                 }
-                                */
                                 
                                 //UserDefaults.standard.set(MyModel.shared.selectionToDiscourage.categoryTokens, forKey: "lockedCategorie")
                                 let hourComponents = Calendar.current.dateComponents([.hour], from: Date())
@@ -121,9 +119,7 @@ struct RestrictionView: View {
                                 WidgetCenter.shared.reloadAllTimelines()
                                 MySchedule.setSchedule(endHour: UserDefaults.standard.integer(forKey: "endHour"), endMins: UserDefaults.standard.integer(forKey: "endMins"))
                                 dismiss()
-                            /* COMMENTED OUT FOR MINIMAL BUILD - FamilyControls features
                             }
-                            */
                         }.foregroundColor(.blue)
                             .font(.subheadline)
                             .bold()
@@ -170,11 +166,9 @@ struct RestrictionView: View {
                     .sheet(isPresented: $isDiscouragedPresented, onDismiss: {
                         
                     }, content: {
-                        // COMMENTED OUT FOR MINIMAL BUILD
-                        FamilyPickerView(/*model: model, isDiscouragedPresented: $isDiscouragedPresented*/)
+                        FamilyPickerView(model: model, isDiscouragedPresented: $isDiscouragedPresented)
                     })
                 Spacer()
-                /* COMMENTED OUT FOR MINIMAL BUILD - FamilyControls features
                 if(MyModel.shared.selectionToDiscourage.applicationTokens.count > 0 ){
                     ScrollView(.vertical) {
                         LazyVGrid(columns:columns, spacing: 10) {
@@ -221,7 +215,6 @@ struct RestrictionView: View {
                         }.padding()
                     }.frame(width: UIScreen.main.bounds.width * 0.9, height:200)
                 }
-                */
                 Spacer()
             }.padding()
         }
@@ -229,6 +222,16 @@ struct RestrictionView: View {
         .padding()
         .background(Color("backgroundColor"))
         .interactiveDismissDisabled()
+        .alert("No Apps Selected", isPresented: $noAppsAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Please select at least one app or category to restrict.")
+        }
+        .alert("Too Many Apps", isPresented: $maxAppsAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Please select fewer than 20 apps for optimal performance.")
+        }
     }
 }
 

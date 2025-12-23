@@ -4,18 +4,17 @@
 //
 //  View for user to input their intent for accessing an app
 //
-//  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import SwiftUI
-// import FamilyControls  // Commented out for minimal build
+import FamilyControls
+import ManagedSettings
 
 struct IntentInputView: View {
-    // MINIMAL BUILD - Properties commented out
-    // @Bindable var viewModel: GatekeeperViewModel
-    // let appToken: ApplicationToken
-    // @Binding var isPresented: Bool
+    @Bindable var viewModel: GatekeeperViewModel
+    let appToken: ApplicationToken
+    @Binding var isPresented: Bool
     
-    // @State private var showingResult = false
+    @State private var showingResult = false
     
     var body: some View {
         NavigationView {
@@ -23,17 +22,24 @@ struct IntentInputView: View {
                 Color("backgroundColor")
                     .ignoresSafeArea()
                 
-                // MINIMAL BUILD - Show placeholder
-                Text("Feature disabled in minimal build")
-                    .font(.body)
-                    .foregroundColor(.secondary)
+                if let decision = viewModel.currentDecision, showingResult {
+                    resultView(for: decision)
+                } else {
+                    intentInputForm
+                }
             }
             .navigationTitle("Request Access")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        isPresented = false
+                    }
+                }
+            }
         }
     }
     
-    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     private var intentInputForm: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -199,6 +205,4 @@ struct IntentInputView: View {
         }
         .padding()
     }
-    */
 }
-
