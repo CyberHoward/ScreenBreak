@@ -39,32 +39,29 @@ func formatTime(hours: Int, minutes: Int) -> String {
 }
 
 struct Provider: TimelineProvider {
-    var endHour = UserDefaults(suiteName: "group.ChristianPichardo.ScreenBreak")?.integer(forKey: "widgetEndHour")
-    var endMins = UserDefaults(suiteName: "group.ChristianPichardo.ScreenBreak")?.integer(forKey: "widgetEndMins")
-    var inRestrictionMode = UserDefaults(suiteName: "group.ChristianPichardo.ScreenBreak")?.bool(forKey: "widgetInRestrictionMode")
+    private let userDefaults = UserDefaults(suiteName: "group.ChristianPichardo.ScreenBreak")
+    
+    var endHour: Int {
+        userDefaults?.integer(forKey: "widgetEndHour") ?? 12
+    }
+    var endMins: Int {
+        userDefaults?.integer(forKey: "widgetEndMins") ?? 0
+    }
+    var inRestrictionMode: Bool {
+        userDefaults?.bool(forKey: "widgetInRestrictionMode") ?? false
+    }
     
     func placeholder(in context: Context) -> ScreenTimeEntry {
-        ScreenTimeEntry(endTime:formatTime(hours:12, minutes:30), inRestrictionMode: true)
+        ScreenTimeEntry(endTime: formatTime(hours: 12, minutes: 30), inRestrictionMode: true)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (ScreenTimeEntry) -> ()) {
-        let entry = ScreenTimeEntry(endTime:formatTime(hours:endHour!, minutes:endMins!), inRestrictionMode: inRestrictionMode!)
+        let entry = ScreenTimeEntry(endTime: formatTime(hours: endHour, minutes: endMins), inRestrictionMode: inRestrictionMode)
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        //var entries: [ScreenTimeEntry] = []
-
-        // Generate a timeline consisting of five entries 30 minutes apart, starting from the current time.
-//        let currentDate = Date()
-//        for hourOffset in 0 ..< 5 {
-//            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-//            let entry = ScreenTimeEntry(endHours:0, endMins:0, inRestrictionMode: false)
-//            entries.append(entry)
-//        }
-        
-        let entry = ScreenTimeEntry(endTime:formatTime(hours:endHour!, minutes:endMins!), inRestrictionMode: inRestrictionMode!)
-
+        let entry = ScreenTimeEntry(endTime: formatTime(hours: endHour, minutes: endMins), inRestrictionMode: inRestrictionMode)
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)
     }
@@ -124,7 +121,10 @@ struct SBWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            SBWidgetEntryView(entry:entry)
+            SBWidgetEntryView(entry: entry)
+                .containerBackground(for: .widget) {
+                    Color("backgroundColor")
+                }
         }
         .configurationDisplayName("ScreenBreak Widget")
         .description("This widget will show you when your restriction time will be over.")

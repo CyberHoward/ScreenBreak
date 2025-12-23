@@ -54,6 +54,9 @@ struct ScreenBreakWidget: Widget {
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             ScreenBreakWidgetEntryView(entry: entry)
+                .containerBackground(for: .widget) {
+                    Color("backgroundColor")
+                }
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")

@@ -25,12 +25,12 @@ struct AppSelection: Codable {
     
     /// Initialize from FamilyActivitySelection
     init(from selection: FamilyActivitySelection) {
-        self.applicationTokensData = selection.applicationTokens.map { token in
-            try! NSKeyedArchiver.archivedData(withRootObject: token, requiringSecureCoding: true)
+        self.applicationTokensData = selection.applicationTokens.compactMap { token in
+            try? NSKeyedArchiver.archivedData(withRootObject: token, requiringSecureCoding: true)
         }
         
-        self.categoryTokensData = selection.categoryTokens.map { token in
-            try! NSKeyedArchiver.archivedData(withRootObject: token, requiringSecureCoding: true)
+        self.categoryTokensData = selection.categoryTokens.compactMap { token in
+            try? NSKeyedArchiver.archivedData(withRootObject: token, requiringSecureCoding: true)
         }
     }
     

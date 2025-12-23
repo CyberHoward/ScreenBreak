@@ -12,7 +12,9 @@ struct HomeView: View {
     @State private var showingRequestAccess = false
     
     init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "Poppins-Bold", size: 40)!]
+        if let font = UIFont(name: "Poppins-Bold", size: 40) {
+            UINavigationBar.appearance().largeTitleTextAttributes = [.font: font]
+        }
     }
     
     var body: some View {

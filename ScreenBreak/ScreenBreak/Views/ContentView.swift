@@ -17,15 +17,14 @@ struct ContentView: View {
     @AppStorage("selectedTab") var selectedTab: Tab = .star
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
     @EnvironmentObject var launchScreenManager: LaunchScreenManager
-    @State private var showOnboarding = false
 
     var body: some View {
-        ZStack{
+        ZStack {
             Color("backgroundColor")
             
             // Main app content
             if hasCompletedOnboarding {
-                switch selectedTab{
+                switch selectedTab {
                 case .home:
                     HomeView()
                 case .star:
@@ -41,19 +40,25 @@ struct ContentView: View {
                 Color.clear
             }
         }
-        .fullScreenCover(isPresented: $showOnboarding) {
+        .fullScreenCover(isPresented: .init(
+            get: { !hasCompletedOnboarding },
+            set: { _ in }
+        )) {
             OnboardingContainerView(isOnboardingComplete: $hasCompletedOnboarding)
         }
+        .onChange(of: hasCompletedOnboarding) { _, completed in
+            if completed {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    launchScreenManager.dismiss()
+                }
+            }
+        }
         .onAppear {
-            // Check if user has completed onboarding
-            if !hasCompletedOnboarding {
-                showOnboarding = true
-            } else {
-                DispatchQueue
-                    .main
-                    .asyncAfter(deadline: .now() + 2) {
-                        launchScreenManager.dismiss()
-                    }
+            // Dismiss launch screen if already completed onboarding
+            if hasCompletedOnboarding {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    launchScreenManager.dismiss()
+                }
             }
         }
     }

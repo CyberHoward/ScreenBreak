@@ -38,8 +38,8 @@ struct HomeReport: DeviceActivityReportScene {
                     let hash = c.hashValue
                     let catDurationInMins = c.totalActivityDuration/60
                     
-                    if catDurationInMins > 2.0{
-                        categoryChartData.append((category.localizedDisplayName!, catDurationInMins))
+                    if catDurationInMins > 2.0, let displayName = category.localizedDisplayName {
+                        categoryChartData.append((displayName, catDurationInMins))
                     }
                     
 //                    let categoryActivity = CategoryDeviceActivity(id: hash, category: category.localizedDisplayName!, duration: duration, token: category.token!)
@@ -60,8 +60,8 @@ struct HomeReport: DeviceActivityReportScene {
                         
                         let duration = Int(ap.totalActivityDuration)
                         let durationInterval = ap.totalActivityDuration
-                        let category = c.category.localizedDisplayName!
-                        let token = ap.application.token!
+                        guard let category = c.category.localizedDisplayName,
+                              let token = ap.application.token else { continue }
                         
                         let formatedDuration = formatDuration(duration:duration)
                        
@@ -76,10 +76,12 @@ struct HomeReport: DeviceActivityReportScene {
             }
         }
         
-        appList.sort(by:sortApps)
+        appList.sort(by: sortApps)
         
+        // Safely get top 3 apps (or fewer if not enough apps)
+        let topApps = Array(appList.prefix(3))
         
-        return ChartAndTopThreeReport(totalDuration: totalActivityDuration, categoryChartData: categoryChartData, appChartData:appChartData, topApps: [appList[0], appList[1], appList[2]])
+        return ChartAndTopThreeReport(totalDuration: totalActivityDuration, categoryChartData: categoryChartData, appChartData: appChartData, topApps: topApps)
     }
     
 }
