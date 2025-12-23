@@ -14,8 +14,9 @@
 //
 //  MINIMAL BUILD VERSION - Full implementation commented out
 
+import FamilyControls
+import ManagedSettings
 import Foundation
-// import FamilyControls  // Commented out for minimal build
 
 struct Session: Codable, Identifiable {
     var id: UUID
@@ -82,7 +83,6 @@ struct Session: Codable, Identifiable {
         self.isActive = isActive
     }
     
-    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     /// Convenience initializer with ApplicationToken
     init(
         id: UUID = UUID(),
@@ -106,7 +106,6 @@ struct Session: Codable, Identifiable {
             isActive: isActive
         )
     }
-    */
     
     // MARK: - Methods
     
@@ -122,7 +121,6 @@ struct Session: Codable, Identifiable {
     }
 }
 
-/* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
 // MARK: - Helper for ApplicationToken conversion
 
 extension Session {
@@ -131,6 +129,6 @@ extension Session {
         return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(appTokenData) as? ApplicationToken
     }
 }
-*/
+
 
 

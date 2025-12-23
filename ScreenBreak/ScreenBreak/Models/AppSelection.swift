@@ -7,7 +7,8 @@
 //  MINIMAL BUILD VERSION - FamilyControls features commented out
 
 import Foundation
-// import FamilyControls  // Commented out for minimal build
+import ManagedSettings
+import FamilyControls
 
 struct AppSelection: Codable {
     /// Store application tokens as Data
@@ -23,7 +24,6 @@ struct AppSelection: Codable {
         self.categoryTokensData = categoryTokensData
     }
     
-    /* COMMENTED OUT FOR MINIMAL BUILD - Re-enable when FamilyControls is properly configured
     /// Initialize from FamilyActivitySelection
     init(from selection: FamilyActivitySelection) {
         self.applicationTokensData = selection.applicationTokens.map { token in
@@ -51,7 +51,6 @@ struct AppSelection: Codable {
         
         return selection
     }
-    */
     
     // MARK: - Properties
     
@@ -63,5 +62,6 @@ struct AppSelection: Codable {
         applicationTokensData.count + categoryTokensData.count
     }
 }
+
 
 
