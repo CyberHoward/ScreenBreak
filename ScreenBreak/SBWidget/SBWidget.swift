@@ -121,10 +121,16 @@ struct SBWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            SBWidgetEntryView(entry: entry)
-                .containerBackground(for: .widget) {
-                    Color("backgroundColor")
-                }
+            if #available(iOS 17.0, *) {
+                SBWidgetEntryView(entry: entry)
+                    .containerBackground(for: .widget) {
+                        Color("backgroundColor")
+                    }
+            } else {
+                SBWidgetEntryView(entry: entry)
+                    .padding()
+                    .background(Color("backgroundColor"))
+            }
         }
         .configurationDisplayName("ScreenBreak Widget")
         .description("This widget will show you when your restriction time will be over.")
