@@ -135,7 +135,8 @@ final class GatekeeperViewModel {
         intent: String,
         decision: GatekeeperAIService.GatekeeperDecision
     ) {
-        let appTokenData = try! NSKeyedArchiver.archivedData(withRootObject: appToken, requiringSecureCoding: true)
+        let encoder = PropertyListEncoder()
+        let appTokenData = try! encoder.encode(appToken)
         
         let attemptDecision: Attempt.Decision
         let reason: String

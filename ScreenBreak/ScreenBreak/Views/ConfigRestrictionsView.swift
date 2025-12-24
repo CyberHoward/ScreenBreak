@@ -11,6 +11,25 @@ import ManagedSettings
 import WidgetKit
 import FamilyControls
 
+// Separate views to encapsulate Label lifecycle and prevent hierarchy warnings
+private struct AppTokenLabelRow: View {
+    let token: ApplicationToken
+    
+    var body: some View {
+        HStack {
+            Label(token).customFont(.body)
+        }
+    }
+}
+
+private struct CategoryTokenIcon: View {
+    let token: ActivityCategoryToken
+    
+    var body: some View {
+        Label(token).labelStyle(.iconOnly)
+    }
+}
+
 struct ConfigRestrictionsView: View {
     @ObservedObject var restrictionModel = MyRestrictionModel()
     @State private var showingRestrictionView = false
@@ -137,14 +156,11 @@ struct ConfigRestrictionsView: View {
                     ForEach(Array(MyModel.shared.savedSelection)){ entity in
                         Text(entity.name ?? "NO NAME")
                     }
-                    ForEach(Array(MyModel.shared.selectionToDiscourage.applicationTokens), id: \.self) {token in
-                        HStack {
-                            Label(token).customFont(.body)
-                        }
-                        
+                    ForEach(Array(MyModel.shared.selectionToDiscourage.applicationTokens), id: \.self) { token in
+                        AppTokenLabelRow(token: token)
                     }
-                    ForEach(Array(MyModel.shared.selectionToDiscourage.categoryTokens), id: \.self) {token in
-                        Label(token).labelStyle(.iconOnly)
+                    ForEach(Array(MyModel.shared.selectionToDiscourage.categoryTokens), id: \.self) { token in
+                        CategoryTokenIcon(token: token)
                     }
                 }
                 

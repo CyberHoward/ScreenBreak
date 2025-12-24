@@ -73,13 +73,14 @@ struct AppSelection: Codable {
     
     func toFamilyActivitySelection() -> FamilyActivitySelection {
         var selection = FamilyActivitySelection()
+        let decoder = PropertyListDecoder()
         
         selection.applicationTokens = Set(applicationTokensData.compactMap { data in
-            try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? ApplicationToken
+            try? decoder.decode(ApplicationToken.self, from: data)
         })
         
         selection.categoryTokens = Set(categoryTokensData.compactMap { data in
-            try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? ActivityCategoryToken
+            try? decoder.decode(ActivityCategoryToken.self, from: data)
         })
         
         return selection

@@ -42,9 +42,16 @@ struct TotalPickupsReport: DeviceActivityReportScene {
                     let category = c.category
                     let hash = c.hashValue
                     let duration = c.totalActivityDuration
-                    let categoryActivity = CategoryDeviceActivity(id: hash, category: category.localizedDisplayName!, duration: duration, token: category.token!)
+                    
+                    // Safely unwrap category properties
+                    guard let categoryName = category.localizedDisplayName,
+                          let categoryToken = category.token else {
+                        continue
+                    }
+                    
+                    let categoryActivity = CategoryDeviceActivity(id: hash, category: categoryName, duration: duration, token: categoryToken)
                     catsList.append(categoryActivity)
-                    categories.append((c.category.localizedDisplayName)!)
+                    categories.append(categoryName)
                     
                     for await ap in c.applications {
                         let appName = (ap.application.localizedDisplayName ?? "nil")
@@ -53,16 +60,19 @@ struct TotalPickupsReport: DeviceActivityReportScene {
                             continue
                         }
                         
+                        // Safely unwrap token
+                        guard let token = ap.application.token else {
+                            continue
+                        }
+                        
                         let duration = Int(ap.totalActivityDuration)
                         let durationInterval = ap.totalActivityDuration
-                        let category = c.category.localizedDisplayName!
-                        let token = ap.application.token!
                         let formatedDuration = formatDuration(duration: duration)
                         let numberOfPickups = ap.numberOfPickups
                         let notifs = ap.numberOfNotifications
                         
                         // Create stuct with all app information the api gives us
-                        let app = AppDeviceActivity(id: bundle, token: token, displayName: appName, duration: formatedDuration, durationInterval: durationInterval, numberOfPickups: numberOfPickups,category: category, numberOfNotifs: notifs)
+                        let app = AppDeviceActivity(id: bundle, token: token, displayName: appName, duration: formatedDuration, durationInterval: durationInterval, numberOfPickups: numberOfPickups, category: categoryName, numberOfNotifs: notifs)
                         appList.append(app)
                     }
                 }
@@ -78,7 +88,12 @@ struct TotalPickupsReport: DeviceActivityReportScene {
         // Gives us an understandable string representation of first pickup
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
-        let dateString = formatter.string(from: firstPickup!)
+        let dateString: String
+        if let firstPickup = firstPickup {
+            dateString = formatter.string(from: firstPickup)
+        } else {
+            dateString = "No pickups today"
+        }
         
         let formatter2 = DateComponentsFormatter()
         formatter2.allowedUnits = [.hour, .minute, .second]

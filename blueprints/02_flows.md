@@ -49,7 +49,7 @@ graph TD
     Permissions[Permission Management]
     
     %% AI Gatekeeper (Intervention Flow)
-    RequestAccess[Request Access View]
+    RequestAccess["Request Access View (AI Chat)"]
     ReasonInput[User Provides Reason]
     AIEvaluation[AI Evaluation]
     AllowedScreen[Access Granted Screen]
@@ -141,16 +141,13 @@ flowchart TD
     UserChoice -- Taps Close --> Home[Returns to Home Screen]
     UserChoice -- Opens ScreenBreak --> AppList[Shows RequestAccessView]
     
-    AppList --> BlockedApps[Display list of blocked apps<br/>with Request Access buttons]
+    AppList --> BlockedApps[Display top 4 blocked apps as chips]
+    BlockedApps --> Selection[User selects apps by tapping chips]
+    Selection --> ChatInterface[AI Chat Interface]
+    ChatInterface --> UserInput{User Provides Input}
     
-    BlockedApps --> SelectApp{User Selects App}
-    SelectApp -- Taps app --> Question["Ask: What do you want to do on [App]?"]
-    SelectApp -- Views active sessions --> SessionTimer[Shows active timers]
-    
-    Question --> UserInput{User Provides Input}
-    UserInput -- Text Reason --> AIEval[AI Evaluation]
-    UserInput -- Quick Option --> AIEval
-    UserInput -- Give Up --> AppList
+    UserInput -- Text or Voice --> AIEval[AI Evaluation]
+    UserInput -- Cancel --> AppList
     
     AIEval --> Context["Consider: time of day, recent usage,<br/>pact rules, strictness level"]
     
@@ -202,12 +199,10 @@ sequenceDiagram
     
     Note over User: User manually opens ScreenBreak
     User->>MainApp: Opens ScreenBreak app
-    MainApp->>User: Shows Dashboard
-    User->>MainApp: Taps "Request Access" button
-    MainApp->>User: Shows RequestAccessView<br/>List: Instagram (blocked), TikTok (blocked)
+    MainApp->>User: Shows RequestAccessView<br/>(unified chat with app chips at top)
     
-    User->>MainApp: Taps "Instagram"
-    MainApp->>User: Shows IntentInputView<br/>"What do you want to do on Instagram?"
+    User->>MainApp: Taps Instagram chip to select it
+    MainApp->>User: Chip highlights as selected
     User->>MainApp: Types: "Reply to friend's message"
     
     MainApp->>AI: evaluateIntent(app: Instagram,<br/>intent: "Reply to...",<br/>context: pact rules + usage)

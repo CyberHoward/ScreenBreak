@@ -121,8 +121,9 @@ final class ShieldManagementService: ObservableObject {
     
     /// Get active session for a specific app
     func getActiveSession(for appToken: ApplicationToken) -> Session? {
-        // Convert token to data for comparison
-        guard let tokenData = try? NSKeyedArchiver.archivedData(withRootObject: appToken, requiringSecureCoding: true) else {
+        // Convert token to data for comparison using PropertyListEncoder (Codable-compliant)
+        let encoder = PropertyListEncoder()
+        guard let tokenData = try? encoder.encode(appToken) else {
             return nil
         }
         

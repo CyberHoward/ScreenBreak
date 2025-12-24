@@ -9,6 +9,25 @@ import SwiftUI
 import FamilyControls
 import ManagedSettings
 
+// Separate view to encapsulate the Label lifecycle and prevent hierarchy warnings
+private struct OnboardingAppTokenCell: View {
+    let token: ApplicationToken
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            Label(token)
+                .labelStyle(.iconOnly)
+                .frame(width: 50, height: 50)
+            
+            Label(token)
+                .labelStyle(.titleOnly)
+                .font(.caption)
+                .lineLimit(2)
+                .frame(width: 70)
+        }
+    }
+}
+
 struct ShieldedAppsSelectionView: View {
     @Bindable var viewModel: OnboardingViewModel
     @State private var showingPicker = false
@@ -48,17 +67,7 @@ struct ShieldedAppsSelectionView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
                                 ForEach(Array(viewModel.selectedApps.applicationTokens), id: \.self) { token in
-                                    VStack(spacing: 8) {
-                                        Label(token)
-                                            .labelStyle(.iconOnly)
-                                            .frame(width: 50, height: 50)
-                                        
-                                        Label(token)
-                                            .labelStyle(.titleOnly)
-                                            .font(.caption)
-                                            .lineLimit(2)
-                                            .frame(width: 70)
-                                    }
+                                    OnboardingAppTokenCell(token: token)
                                 }
                             }
                             .padding()

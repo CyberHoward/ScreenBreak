@@ -9,6 +9,28 @@ import SwiftUI
 import FamilyControls
 import ManagedSettings
 
+// Separate view to encapsulate the Label lifecycle and prevent hierarchy warnings
+private struct AppTokenRow: View {
+    let token: ApplicationToken
+    
+    var body: some View {
+        HStack {
+            Label(token)
+                .labelStyle(.iconOnly)
+                .frame(width: 40, height: 40)
+            
+            Label(token)
+                .labelStyle(.titleOnly)
+                .font(.body)
+            
+            Spacer()
+        }
+        .padding()
+        .background(Color("onboardingCard").opacity(0.5))
+        .cornerRadius(12)
+    }
+}
+
 struct ManageAppsView: View {
     @Bindable var viewModel: SettingsViewModel
     @State private var showingPicker = false
@@ -53,21 +75,8 @@ struct ManageAppsView: View {
                                     .padding(.horizontal)
                                 
                                 ForEach(Array(selection.applicationTokens), id: \.self) { token in
-                                    HStack {
-                                        Label(token)
-                                            .labelStyle(.iconOnly)
-                                            .frame(width: 40, height: 40)
-                                        
-                                        Label(token)
-                                            .labelStyle(.titleOnly)
-                                            .font(.body)
-                                        
-                                        Spacer()
-                                    }
-                                    .padding()
-                                    .background(Color("onboardingCard").opacity(0.5))
-                                    .cornerRadius(12)
-                                    .padding(.horizontal)
+                                    AppTokenRow(token: token)
+                                        .padding(.horizontal)
                                 }
                             }
                         }

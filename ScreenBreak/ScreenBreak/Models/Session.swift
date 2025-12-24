@@ -86,8 +86,9 @@ struct Session: Codable, Identifiable {
         aiDecision: String,
         isActive: Bool = true
     ) {
-        // Convert ApplicationToken to Data for storage
-        let data = try! NSKeyedArchiver.archivedData(withRootObject: appToken, requiringSecureCoding: true)
+        // Convert ApplicationToken to Data for storage using PropertyListEncoder (Codable-compliant)
+        let encoder = PropertyListEncoder()
+        let data = try! encoder.encode(appToken)
         
         self.init(
             id: id,
@@ -119,7 +120,8 @@ struct Session: Codable, Identifiable {
 extension Session {
     /// Retrieve ApplicationToken from stored data
     func getApplicationToken() -> ApplicationToken? {
-        return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(appTokenData) as? ApplicationToken
+        let decoder = PropertyListDecoder()
+        return try? decoder.decode(ApplicationToken.self, from: appTokenData)
     }
 }
 
