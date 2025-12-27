@@ -55,16 +55,24 @@ final class GatekeeperChatViewModel: ObservableObject {
     
     // MARK: - Computed
     var canSend: Bool {
-        !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isProcessing && !isRecording
+        !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && 
+        !isProcessing && 
+        !isRecording
+        // Apps don't need to be selected - user can mention them in their message
     }
     
+    /// Get display names for selected apps using the stored name mapping
+    var selectedAppNamesList: [String] {
+        shieldService.shieldedApps.getAppNames(for: selectedApps)
+    }
+    
+    /// Formatted string of selected app names for display
     var selectedAppNames: String {
-        if selectedApps.isEmpty {
-            return "selected apps"
+        let names = selectedAppNamesList
+        if names.isEmpty {
+            return selectedApps.isEmpty ? "" : "\(selectedApps.count) app\(selectedApps.count == 1 ? "" : "s")"
         }
-        // We can't get names from tokens directly, so use count
-        let count = selectedApps.count
-        return count == 1 ? "the selected app" : "\(count) apps"
+        return names.joined(separator: ", ")
     }
     
     // MARK: - Initialization
@@ -114,7 +122,7 @@ final class GatekeeperChatViewModel: ObservableObject {
     // MARK: - Messages
     
     private func addInitialGreeting() {
-        let greeting = "Hey! Select the apps you want to access and tell me what you need to do."
+        let greeting = "Hey! Tell me which app you need and why. You can also tap an app above to select it."
         messages.append(GatekeeperChatMessage(text: greeting, isUser: false))
     }
     
@@ -122,12 +130,15 @@ final class GatekeeperChatViewModel: ObservableObject {
         let text = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
         
-        // Add user message to UI
+        // Add user message to UI (just the user's text)
         messages.append(GatekeeperChatMessage(text: text, isUser: true))
         inputText = ""
         
-        // Add to chat history
-        if let userMsg = ChatQuery.ChatCompletionMessageParam(role: .user, content: text) {
+        // Build the full message for AI including selected apps context
+        let messageForAI = buildMessageWithAppContext(userText: text)
+        
+        // Add to chat history (with app context for AI)
+        if let userMsg = ChatQuery.ChatCompletionMessageParam(role: .user, content: messageForAI) {
             chatHistory.append(userMsg)
         }
         
@@ -137,11 +148,44 @@ final class GatekeeperChatViewModel: ObservableObject {
         }
     }
     
+    /// Builds a message that includes context about selected apps for the AI
+    private func buildMessageWithAppContext(userText: String) -> String {
+        if selectedApps.isEmpty {
+            // No apps selected - user should mention app names in their message
+            return userText
+        }
+        
+        // Get actual app names from the stored mapping
+        let appNames = selectedAppNamesList
+        let appContext: String
+        
+        if appNames.isEmpty {
+            // Fallback if names aren't available (shouldn't happen normally)
+            let appCount = selectedApps.count
+            appContext = "[User has selected \(appCount) app\(appCount == 1 ? "" : "s") to request access to]"
+        } else if appNames.count == 1 {
+            appContext = "[User has selected to request access to: \(appNames[0])]"
+        } else {
+            let namesList = appNames.joined(separator: ", ")
+            appContext = "[User has selected to request access to these apps: \(namesList)]"
+        }
+        
+        return """
+        \(appContext)
+        
+        User's request: \(userText)
+        """
+    }
+    
     // MARK: - AI Evaluation
     
     private func evaluateUserIntent(_ intent: String) async {
         isProcessing = true
         errorMessage = nil
+        
+        defer {
+            isProcessing = false
+        }
         
         do {
             // Stream the AI response
@@ -186,7 +230,7 @@ final class GatekeeperChatViewModel: ObservableObject {
                 handleGenericError(error)
             }
         } catch {
-            handleGenericError(error)
+            handleAPIError(error)
         }
     }
     
@@ -198,8 +242,31 @@ final class GatekeeperChatViewModel: ObservableObject {
         }
         print("⚠️ GatekeeperChat error: \(error)")
         messages.append(GatekeeperChatMessage(text: "Sorry, I encountered an error. Please try again.", isUser: false))
+    }
+    
+    private func handleAPIError(_ error: Error) {
+        errorMessage = error.localizedDescription
+        // Remove the empty message
+        if messages.last?.text.isEmpty == true {
+            messages.removeLast()
+        }
         
-        isProcessing = false
+        let errorString = String(describing: error).lowercased()
+        print("⚠️ GatekeeperChat API error: \(error)")
+        
+        // Check for common API errors
+        let userMessage: String
+        if errorString.contains("401") || errorString.contains("invalid") || errorString.contains("unauthorized") || errorString.contains("authentication") {
+            userMessage = "The API key appears to be invalid or revoked. Please update your OpenAI API key in the project settings."
+        } else if errorString.contains("429") || errorString.contains("rate") || errorString.contains("quota") {
+            userMessage = "Rate limit exceeded. Please wait a moment and try again."
+        } else if errorString.contains("network") || errorString.contains("connection") || errorString.contains("timeout") {
+            userMessage = "Network error. Please check your internet connection and try again."
+        } else {
+            userMessage = "Sorry, I encountered an error. Please try again."
+        }
+        
+        messages.append(GatekeeperChatMessage(text: userMessage, isUser: false))
     }
     
     private func handleDecision(_ decision: GatekeeperAIService.GatekeeperDecision, intent: String) async {
@@ -336,10 +403,13 @@ final class GatekeeperChatViewModel: ObservableObject {
         **Your Role:**
         \(strictnessGuidance)
         
-        **Important Context:**
-        - The user can select multiple apps to request access to at once
-        - If they mention specific apps, that's what they want access to
-        - If no apps are selected, remind them to select which apps they need
+        **Important Context About App Selection:**
+        - Users can either select apps via the UI OR mention app names in their message
+        - When you see "[User has selected to request access to: AppName]" or "[User has selected to request access to these apps: App1, App2]", they have ALREADY chosen which apps via the UI - DO NOT ask which apps they want
+        - If no apps are pre-selected, look for app names mentioned in their message (e.g., "I need to check Instagram" means they want Instagram)
+        - If you can't determine which apps they need and they haven't pre-selected any, ask them to clarify which app(s) they need
+        - Focus on evaluating their stated INTENT for using those apps
+        - If they selected or mentioned multiple apps, your decision applies to ALL of them
         
         **Communication Style:**
         - Be conversational and friendly

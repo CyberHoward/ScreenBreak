@@ -88,3 +88,4 @@ The full build should:
 - ✅ Full onboarding with authorization and pact creation
 - ✅ Full settings with app management and pact controls
 
+

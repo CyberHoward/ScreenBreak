@@ -102,9 +102,20 @@ struct RequestAccessView: View {
         let tokens = Array(selection.applicationTokens.prefix(4))
         
         return VStack(alignment: .leading, spacing: 8) {
-            Text("Select apps to request access")
-                .font(.caption)
-                .foregroundColor(.secondary)
+            HStack {
+                Text("Select apps to request access")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                Spacer()
+                
+                if !chatViewModel.selectedApps.isEmpty {
+                    Text("\(chatViewModel.selectedApps.count) selected")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.blue)
+                }
+            }
             
             LazyVGrid(columns: [
                 GridItem(.flexible()),
@@ -187,7 +198,13 @@ struct RequestAccessView: View {
                 
                 // Text field
                 HStack {
-                    TextField("Why do you need access?", text: $chatViewModel.inputText, axis: .vertical)
+                    TextField(
+                        chatViewModel.selectedApps.isEmpty 
+                            ? "Which app do you need and why?" 
+                            : "Why do you need \(chatViewModel.selectedAppNames)?",
+                        text: $chatViewModel.inputText, 
+                        axis: .vertical
+                    )
                         .textFieldStyle(.plain)
                         .lineLimit(1...4)
                         .focused($isTextFieldFocused)
