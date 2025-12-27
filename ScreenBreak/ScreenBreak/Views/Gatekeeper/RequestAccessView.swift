@@ -18,7 +18,7 @@ struct RequestAccessView: View {
         NavigationView {
             ZStack {
                 // Background
-                Color("backgroundColor")
+                AppColors.bg
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
@@ -64,7 +64,7 @@ struct RequestAccessView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .background(
-            Color("backgroundColor")
+            AppColors.bg
                 .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
         )
     }
@@ -73,11 +73,11 @@ struct RequestAccessView: View {
         HStack(spacing: 10) {
             Image(systemName: "checkmark.shield.fill")
                 .font(.title2)
-                .foregroundColor(.green)
+                .foregroundColor(AppColors.success)
             
             Text("All apps accessible")
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(AppColors.textMuted)
         }
         .padding(.vertical, 8)
     }
@@ -85,13 +85,13 @@ struct RequestAccessView: View {
     private var activeSessionsBadge: some View {
         HStack(spacing: 8) {
             Circle()
-                .fill(Color.green)
+                .fill(AppColors.success)
                 .frame(width: 8, height: 8)
             
             Text("\(shieldService.activeSessions.count) active session\(shieldService.activeSessions.count == 1 ? "" : "s")")
                 .font(.caption)
                 .fontWeight(.medium)
-                .foregroundColor(.green)
+                .foregroundColor(AppColors.success)
             
             Spacer()
         }
@@ -113,7 +113,7 @@ struct RequestAccessView: View {
                     Text("\(chatViewModel.selectedApps.count) selected")
                         .font(.caption)
                         .fontWeight(.medium)
-                        .foregroundColor(.blue)
+                        .foregroundColor(AppColors.secondary)
                 }
             }
             
@@ -229,7 +229,7 @@ struct RequestAccessView: View {
                     Image(systemName: "arrow.up.circle.fill")
                         .font(.system(size: 32))
                         .foregroundStyle(
-                            chatViewModel.canSend ? Color.blue : Color.gray.opacity(0.5)
+                            chatViewModel.canSend ? AppColors.primary : AppColors.textMuted.opacity(0.5)
                         )
                 }
                 .disabled(!chatViewModel.canSend)
@@ -265,16 +265,16 @@ struct RequestAccessView: View {
             HStack(spacing: 12) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 28))
-                    .foregroundColor(.green)
+                    .foregroundColor(AppColors.success)
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Access Granted")
                         .font(.headline)
-                        .foregroundColor(.primary)
+                        .foregroundColor(AppColors.text)
                     
                     Text("\(minutes) minute\(minutes == 1 ? "" : "s") • \(chatViewModel.selectedApps.count) app\(chatViewModel.selectedApps.count == 1 ? "" : "s")")
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(AppColors.textMuted)
                 }
                 
                 Spacer()
@@ -292,7 +292,7 @@ struct RequestAccessView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 14)
-                .background(Color.green)
+                .background(AppColors.success)
                 .foregroundColor(.white)
                 .cornerRadius(12)
             }
@@ -305,16 +305,16 @@ struct RequestAccessView: View {
             HStack(spacing: 12) {
                 Image(systemName: "hand.raised.fill")
                     .font(.system(size: 28))
-                    .foregroundColor(.orange)
+                    .foregroundColor(AppColors.warning)
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Not Right Now")
                         .font(.headline)
-                        .foregroundColor(.primary)
+                        .foregroundColor(AppColors.text)
                     
                     Text("Let's protect your focus")
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(AppColors.textMuted)
                 }
                 
                 Spacer()
@@ -324,24 +324,24 @@ struct RequestAccessView: View {
                 VStack(spacing: 8) {
                     Text("Try instead:")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(AppColors.textMuted)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     ForEach(alternatives.prefix(3), id: \.self) { alt in
                         HStack {
                             Image(systemName: "sparkles")
                                 .font(.caption)
-                                .foregroundColor(.blue)
+                                .foregroundColor(AppColors.secondary)
                             
                             Text(alt)
                                 .font(.subheadline)
-                                .foregroundColor(.primary)
+                                .foregroundColor(AppColors.text)
                             
                             Spacer()
                         }
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
-                        .background(Color(.systemGray6))
+                        .background(AppColors.bgLight)
                         .cornerRadius(8)
                     }
                 }
@@ -354,7 +354,7 @@ struct RequestAccessView: View {
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
-                    .background(Color.blue)
+                    .background(AppColors.primary)
                     .foregroundColor(.white)
                     .cornerRadius(12)
             }
@@ -398,7 +398,7 @@ struct BlockedAppChip: View {
                 AppChipIcon(token: token)
                 
                 AppChipTitle(token: token)
-                    .foregroundColor(isSelected ? .white : .primary)
+                    .foregroundColor(isSelected ? .white : AppColors.text)
                 
                 Spacer(minLength: 0)
                 
@@ -412,11 +412,11 @@ struct BlockedAppChip: View {
             .padding(.vertical, 10)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(isSelected ? Color.blue : Color(.systemGray6))
+                    .fill(isSelected ? AppColors.primary : AppColors.bgLight)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2)
+                    .stroke(isSelected ? AppColors.primary : AppColors.borderMuted, lineWidth: isSelected ? 2 : 1)
             )
         }
         .buttonStyle(.plain)
@@ -437,13 +437,13 @@ struct ChatMessageBubble: View {
             VStack(alignment: message.isUser ? .trailing : .leading, spacing: 4) {
                 Text(message.text)
                     .font(.body)
-                    .foregroundColor(message.isUser ? .white : .primary)
+                    .foregroundColor(message.isUser ? .white : AppColors.text)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
                     .background(
                         message.isUser
-                            ? AnyShapeStyle(Color.blue)
-                            : AnyShapeStyle(Color(.systemGray6))
+                            ? AnyShapeStyle(AppColors.primary)
+                            : AnyShapeStyle(AppColors.bgLight)
                     )
                     .cornerRadius(18)
                     .cornerRadius(message.isUser ? 4 : 18, corners: message.isUser ? .bottomRight : .bottomLeft)
@@ -466,7 +466,7 @@ struct AITypingIndicator: View {
             HStack(spacing: 4) {
                 ForEach(0..<3, id: \.self) { index in
                     Circle()
-                        .fill(Color.gray.opacity(0.5))
+                        .fill(AppColors.textMuted.opacity(0.5))
                         .frame(width: 8, height: 8)
                         .scaleEffect(animationPhase == index ? 1.2 : 1.0)
                         .opacity(animationPhase == index ? 1 : 0.5)
@@ -474,7 +474,7 @@ struct AITypingIndicator: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            .background(Color(.systemGray6))
+            .background(AppColors.bgLight)
             .cornerRadius(18)
             
             Spacer()

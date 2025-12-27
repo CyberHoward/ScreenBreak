@@ -22,11 +22,16 @@ private struct AppTokenRow: View {
             Label(token)
                 .labelStyle(.titleOnly)
                 .font(.body)
+                .foregroundColor(AppColors.text)
             
             Spacer()
         }
         .padding()
-        .background(Color("onboardingCard").opacity(0.5))
+        .background(AppColors.bgLight.opacity(0.8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(AppColors.borderMuted, lineWidth: 1)
+        )
         .cornerRadius(12)
     }
 }
@@ -45,7 +50,7 @@ struct ManageAppsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color("backgroundColor")
+                AppColors.bg
                     .ignoresSafeArea()
                 
                 VStack(spacing: 20) {
@@ -53,15 +58,16 @@ struct ManageAppsView: View {
                     VStack(spacing: 8) {
                         Image(systemName: "apps.iphone")
                             .font(.system(size: 50))
-                            .foregroundColor(.blue)
+                            .foregroundColor(AppColors.secondary)
                         
                         Text("Manage Shielded Apps")
                             .font(.title2)
                             .fontWeight(.bold)
+                            .foregroundColor(AppColors.text)
                         
                         Text("These apps require AI approval")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(AppColors.textMuted)
                     }
                     .padding(.top)
                     
@@ -71,7 +77,7 @@ struct ManageAppsView: View {
                             VStack(alignment: .leading, spacing: 12) {
                                 Text("Selected Apps (\(selection.applicationTokens.count))")
                                     .font(.headline)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(AppColors.textMuted)
                                     .padding(.horizontal)
                                 
                                 ForEach(Array(selection.applicationTokens), id: \.self) { token in
@@ -84,11 +90,11 @@ struct ManageAppsView: View {
                         VStack(spacing: 16) {
                             Image(systemName: "tray")
                                 .font(.system(size: 40))
-                                .foregroundColor(.gray)
+                                .foregroundColor(AppColors.textMuted)
                             
                             Text("No apps selected")
                                 .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(AppColors.textMuted)
                         }
                         .frame(maxHeight: .infinity)
                     }
@@ -105,7 +111,7 @@ struct ManageAppsView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.blue)
+                            .background(AppColors.primary)
                             .foregroundColor(.white)
                             .cornerRadius(12)
                         }
@@ -119,7 +125,7 @@ struct ManageAppsView: View {
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(Color.green)
+                                .background(AppColors.success)
                                 .foregroundColor(.white)
                                 .cornerRadius(12)
                         }

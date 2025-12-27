@@ -143,7 +143,7 @@ struct RestrictionView: View {
                 }
                     .buttonStyle(.borderedProminent)
                     .foregroundColor(.white)
-                    .tint(Color(.black.withAlphaComponent(0.6)))
+                    .tint(AppColors.primary)
                     .sheet(isPresented: $isDurationPresented, onDismiss: {
                         
                     }, content: {
@@ -162,7 +162,7 @@ struct RestrictionView: View {
                 }
                     .buttonStyle(.borderedProminent)
                     .foregroundColor(.white)
-                    .tint(Color(.black.withAlphaComponent(0.6)))
+                    .tint(AppColors.primary)
                     .sheet(isPresented: $isDiscouragedPresented, onDismiss: {
                         
                     }, content: {
@@ -220,7 +220,7 @@ struct RestrictionView: View {
         }
         .font(.title)
         .padding()
-        .background(Color("backgroundColor"))
+        .background(AppColors.bg)
         .interactiveDismissDisabled()
         .alert("No Apps Selected", isPresented: $noAppsAlert) {
             Button("OK", role: .cancel) {}

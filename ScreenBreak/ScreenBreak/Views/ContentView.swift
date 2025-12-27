@@ -20,7 +20,7 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            Color("backgroundColor")
+            AppColors.bg
             
             // Main app content
             if hasCompletedOnboarding {

@@ -123,14 +123,11 @@ if AuthorizationCenter.shared.authorizationStatus == .denied {
 
 ```
 
+## IMPORTANT Documents
 
+The [blueprints](blueprints) folder is the source of truth for the app. It contains the most up to date information about the app. Use these documents to set your goals and scope.
 
----
-
-### Recommended Resource
-
-For a deep dive into how these specific extensions communicate (or fail to communicate), this video is essential for understanding the strict boundaries Apple enforces.
-
-[WWDC21: Meet the Screen Time API](https://www.youtube.com/watch?v=DKH0cw9LhtM)
-
-**Relevance:** This is the foundational documentation for the framework you are using; it explicitly details the "Sandbox" constraints mentioned in Section 1.1 and 3.3 of the standards above.
+Description: [01_description.md](blueprints/01_description.md)
+Screens: [03_screens.md](blueprints/03_screens.md)
+Flows: [02_flows.md](blueprints/02_flows.md)
+Colors: [05_color.md](blueprints/05_color.md)

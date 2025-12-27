@@ -34,7 +34,7 @@ struct ShieldedAppsSelectionView: View {
     
     var body: some View {
         ZStack {
-            Color("backgroundColor")
+            AppColors.bg
                 .ignoresSafeArea()
             
             VStack(spacing: 32) {
@@ -42,16 +42,17 @@ struct ShieldedAppsSelectionView: View {
                 VStack(spacing: 12) {
                     Image(systemName: "apps.iphone")
                         .font(.system(size: 60))
-                        .foregroundColor(.blue)
+                        .foregroundColor(AppColors.secondary)
                     
                     Text("Choose Apps to Shield")
                         .font(.title)
                         .fontWeight(.bold)
+                        .foregroundColor(AppColors.text)
                         .multilineTextAlignment(.center)
                     
                     Text("These apps will require AI approval before accessing")
                         .font(.body)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(AppColors.textMuted)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
                 }
@@ -62,7 +63,7 @@ struct ShieldedAppsSelectionView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Selected Apps (\(viewModel.selectedApps.applicationTokens.count + viewModel.selectedApps.categoryTokens.count))")
                             .font(.headline)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(AppColors.textMuted)
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
@@ -78,11 +79,11 @@ struct ShieldedAppsSelectionView: View {
                     VStack(spacing: 16) {
                         Image(systemName: "tray")
                             .font(.system(size: 40))
-                            .foregroundColor(.gray)
+                            .foregroundColor(AppColors.textMuted)
                         
                         Text("No apps selected yet")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(AppColors.textMuted)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 40)
@@ -99,7 +100,7 @@ struct ShieldedAppsSelectionView: View {
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(AppColors.primary)
                     .foregroundColor(.white)
                     .cornerRadius(12)
                 }
@@ -110,15 +111,15 @@ struct ShieldedAppsSelectionView: View {
                 VStack(spacing: 8) {
                     Image(systemName: "lock.shield")
                         .font(.title3)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(AppColors.textMuted)
                     
                     Text("You'll be asked to authorize Screen Time permissions in the next step")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(AppColors.textMuted)
                         .multilineTextAlignment(.center)
                 }
                 .padding()
-                .background(Color.gray.opacity(0.1))
+                .background(AppColors.bgDark.opacity(0.5))
                 .cornerRadius(8)
                 .padding(.horizontal)
                 
@@ -136,8 +137,8 @@ struct ShieldedAppsSelectionView: View {
                         Text("Back")
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.gray.opacity(0.2))
-                            .foregroundColor(.primary)
+                            .background(AppColors.bgDark)
+                            .foregroundColor(AppColors.text)
                             .cornerRadius(12)
                     }
                     
@@ -147,14 +148,14 @@ struct ShieldedAppsSelectionView: View {
                         Text("Continue")
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(viewModel.canProceed ? Color.blue : Color.gray)
+                            .background(viewModel.canProceed ? AppColors.primary : AppColors.textMuted)
                             .foregroundColor(.white)
                             .cornerRadius(12)
                     }
                     .disabled(!viewModel.canProceed)
                 }
                 .padding()
-                .background(Color("backgroundColor"))
+                .background(AppColors.bg)
             }
         }
     }

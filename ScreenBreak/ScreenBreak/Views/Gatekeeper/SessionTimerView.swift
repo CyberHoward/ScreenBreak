@@ -39,13 +39,13 @@ struct SessionTimerView: View {
             // Timer display
             ZStack {
                 Circle()
-                    .stroke(Color.gray.opacity(0.2), lineWidth: 12)
+                    .stroke(AppColors.borderMuted.opacity(0.3), lineWidth: 12)
                     .frame(width: 200, height: 200)
                 
                 Circle()
                     .trim(from: 0, to: progress)
                     .stroke(
-                        timeRemaining <= 2 ? Color.red : Color.green,
+                        timeRemaining <= 2 ? AppColors.danger : AppColors.success,
                         style: StrokeStyle(lineWidth: 12, lineCap: .round)
                     )
                     .frame(width: 200, height: 200)
@@ -55,11 +55,11 @@ struct SessionTimerView: View {
                 VStack(spacing: 4) {
                     Text("\(timeRemaining)")
                         .font(.system(size: 60, weight: .bold, design: .rounded))
-                        .foregroundColor(timeRemaining <= 2 ? .red : .primary)
+                        .foregroundColor(timeRemaining <= 2 ? AppColors.danger : AppColors.text)
                     
                     Text("minutes left")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(AppColors.textMuted)
                 }
             }
             
@@ -67,10 +67,11 @@ struct SessionTimerView: View {
             VStack(spacing: 8) {
                 Text("You said you wanted to:")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(AppColors.textMuted)
                 
                 Text("\"\(session.intent)\"")
                     .font(.body)
+                    .foregroundColor(AppColors.text)
                     .italic()
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
@@ -80,10 +81,10 @@ struct SessionTimerView: View {
             if timeRemaining <= 2 {
                 Text("⏰ Time's almost up!")
                     .font(.subheadline)
-                    .foregroundColor(.red)
+                    .foregroundColor(AppColors.danger)
                     .padding(.horizontal)
                     .padding(.vertical, 8)
-                    .background(Color.red.opacity(0.1))
+                    .background(AppColors.danger.opacity(0.1))
                     .cornerRadius(8)
             }
             
@@ -142,22 +143,26 @@ struct MiniSessionTimerView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Active session")
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(AppColors.textMuted)
                 
                 Text("\(timeRemaining) min left")
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundColor(timeRemaining <= 2 ? .red : .green)
+                    .foregroundColor(timeRemaining <= 2 ? AppColors.danger : AppColors.success)
             }
             
             Spacer()
             
             Circle()
-                .fill(timeRemaining <= 2 ? Color.red : Color.green)
+                .fill(timeRemaining <= 2 ? AppColors.danger : AppColors.success)
                 .frame(width: 8, height: 8)
         }
         .padding()
-        .background(Color("onboardingCard").opacity(0.3))
+        .background(AppColors.bgLight.opacity(0.5))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(AppColors.borderMuted, lineWidth: 1)
+        )
         .cornerRadius(12)
     }
 }
@@ -172,5 +177,6 @@ struct MiniSessionTimerView: View {
         )
     )
 }
+
 
 

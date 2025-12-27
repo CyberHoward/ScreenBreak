@@ -89,3 +89,4 @@ The full build should:
 - ✅ Full settings with app management and pact controls
 
 
+

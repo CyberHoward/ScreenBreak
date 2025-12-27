@@ -13,7 +13,7 @@ struct WelcomeView: View {
     
     var body: some View {
         ZStack {
-            Color("backgroundColor")
+            AppColors.bg
                 .ignoresSafeArea()
             
             // Background animation
@@ -37,10 +37,11 @@ struct WelcomeView: View {
                     
                     Text("ScreenBreak")
                         .font(.system(size: 36, weight: .bold))
+                        .foregroundColor(AppColors.text)
                     
                     Text("Reclaim your attention")
                         .font(.title3)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(AppColors.textMuted)
                 }
                 
                 Spacer()
@@ -78,7 +79,7 @@ struct WelcomeView: View {
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(AppColors.primary)
                         .foregroundColor(.white)
                         .cornerRadius(12)
                 }
@@ -98,20 +99,25 @@ struct FeatureCard: View {
         HStack(alignment: .top, spacing: 16) {
             Image(systemName: icon)
                 .font(.title2)
-                .foregroundColor(.blue)
+                .foregroundColor(AppColors.primary)
                 .frame(width: 40)
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.headline)
+                    .foregroundColor(AppColors.text)
                 
                 Text(description)
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(AppColors.textMuted)
             }
         }
         .padding()
-        .background(Color("onboardingCard").opacity(0.5))
+        .background(AppColors.bgLight.opacity(0.8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(AppColors.borderMuted, lineWidth: 1)
+        )
         .cornerRadius(12)
     }
 }

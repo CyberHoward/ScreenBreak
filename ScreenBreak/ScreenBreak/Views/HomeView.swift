@@ -20,7 +20,7 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color("backgroundColor")
+                AppColors.bg
                     .ignoresSafeArea()
                 
                 if viewModel.hasPact {
@@ -65,15 +65,16 @@ struct HomeView: View {
         VStack(spacing: 24) {
             Image(systemName: "flag.checkered")
                 .font(.system(size: 80))
-                .foregroundColor(.gray)
+                .foregroundColor(AppColors.textMuted)
             
             Text("No Active Pact")
                 .font(.title)
                 .fontWeight(.bold)
+                .foregroundColor(AppColors.text)
             
             Text("Complete onboarding to start your journey")
                 .font(.body)
-                .foregroundColor(.secondary)
+                .foregroundColor(AppColors.textMuted)
                 .multilineTextAlignment(.center)
         }
         .padding()

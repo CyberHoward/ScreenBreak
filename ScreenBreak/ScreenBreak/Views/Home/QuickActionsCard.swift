@@ -14,13 +14,13 @@ struct QuickActionsCard: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Quick Actions")
                 .font(.headline)
-                .foregroundColor(.secondary)
+                .foregroundColor(AppColors.textMuted)
             
             HStack(spacing: 12) {
                 ActionButton(
                     icon: "hand.raised.app.fill",
                     title: "Request\nAccess",
-                    color: .blue
+                    color: AppColors.secondary
                 ) {
                     showingRequestAccess = true
                 }
@@ -28,7 +28,7 @@ struct QuickActionsCard: View {
                 ActionButton(
                     icon: "chart.bar.fill",
                     title: "View\nInsights",
-                    color: .purple
+                    color: AppColors.info
                 ) {
                     // Navigate to insights
                 }
@@ -38,7 +38,7 @@ struct QuickActionsCard: View {
                 ActionButton(
                     icon: "gear",
                     title: "Settings",
-                    color: .gray
+                    color: AppColors.textMuted
                 ) {
                     // Navigate to settings
                 }
@@ -46,16 +46,19 @@ struct QuickActionsCard: View {
                 ActionButton(
                     icon: "apps.iphone",
                     title: "Manage\nApps",
-                    color: .orange
+                    color: AppColors.warning
                 ) {
                     // Navigate to manage apps
                 }
             }
         }
         .padding()
-        .background(Color("onboardingCard").opacity(0.5))
+        .background(AppColors.bgLight.opacity(0.8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(AppColors.borderMuted, lineWidth: 1)
+        )
         .cornerRadius(16)
-        .shadow(color: Color("Shadow").opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
 
@@ -78,13 +81,13 @@ struct ActionButton: View {
                 Text(title)
                     .font(.caption)
                     .fontWeight(.medium)
-                    .foregroundColor(.primary)
+                    .foregroundColor(AppColors.text)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
-            .background(Color.white.opacity(0.5))
+            .background(AppColors.highlight.opacity(0.3))
             .cornerRadius(12)
         }
     }
@@ -97,17 +100,21 @@ struct ActiveSessionsCard: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Active Sessions")
                 .font(.headline)
-                .foregroundColor(.secondary)
+                .foregroundColor(AppColors.textMuted)
             
             ForEach(sessions) { session in
                 MiniSessionTimerView(session: session)
             }
         }
         .padding()
-        .background(Color("onboardingCard").opacity(0.5))
+        .background(AppColors.bgLight.opacity(0.8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(AppColors.borderMuted, lineWidth: 1)
+        )
         .cornerRadius(16)
-        .shadow(color: Color("Shadow").opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
+
 
 

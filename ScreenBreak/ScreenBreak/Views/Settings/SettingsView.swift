@@ -15,7 +15,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color("backgroundColor")
+                AppColors.bg
                     .ignoresSafeArea()
                 
                 List {
@@ -26,28 +26,28 @@ struct SettingsView: View {
                                 Text("Duration")
                                 Spacer()
                                 Text("\(pact.durationDays) days")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(AppColors.textMuted)
                             }
                             
                             HStack {
                                 Text("Day")
                                 Spacer()
                                 Text("\(pact.currentDay) of \(pact.durationDays)")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(AppColors.textMuted)
                             }
                             
                             HStack {
                                 Text("Streak")
                                 Spacer()
                                 Text("\(pact.streak) days")
-                                    .foregroundColor(.orange)
+                                    .foregroundColor(AppColors.warning)
                             }
                             
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("Motivation")
                                 Text(pact.motivation)
                                     .font(.subheadline)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(AppColors.textMuted)
                                     .italic()
                             }
                         }
@@ -58,21 +58,21 @@ struct SettingsView: View {
                                 Label("Daily Limit", systemImage: "clock")
                                 Spacer()
                                 Text("\(pact.rules.dailyLimitMinutes) min")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(AppColors.textMuted)
                             }
                             
                             HStack {
                                 Label("Session Limit", systemImage: "timer")
                                 Spacer()
                                 Text("\(pact.rules.sessionLimitMinutes) min")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(AppColors.textMuted)
                             }
                             
                             HStack {
                                 Label("Strictness", systemImage: "shield")
                                 Spacer()
                                 Text(pact.rules.strictness.rawValue.capitalized)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(AppColors.textMuted)
                             }
                             
                             if let quietHours = pact.rules.quietHours {
@@ -80,7 +80,7 @@ struct SettingsView: View {
                                     Label("Quiet Hours", systemImage: "moon.stars")
                                     Spacer()
                                     Text(quietHours.description)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(AppColors.textMuted)
                                 }
                             }
                         }
@@ -95,10 +95,10 @@ struct SettingsView: View {
                                 Label("Manage Apps", systemImage: "apps.iphone")
                                 Spacer()
                                 Text("\(viewModel.shieldedApps.count)")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(AppColors.textMuted)
                                 Image(systemName: "chevron.right")
                                     .font(.caption)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(AppColors.textMuted)
                             }
                         }
                     }
@@ -109,13 +109,13 @@ struct SettingsView: View {
                             Label("Screen Time", systemImage: "hourglass")
                             Spacer()
                             Text(viewModel.authorizationStatus)
-                                .foregroundColor(viewModel.isAuthorized ? .green : .red)
+                                .foregroundColor(viewModel.isAuthorized ? AppColors.success : AppColors.danger)
                         }
                         
                         if !viewModel.isAuthorized {
                             Text("Go to Settings > Screen Time to grant permission")
                                 .font(.caption)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(AppColors.textMuted)
                         }
                     }
                     
@@ -136,7 +136,7 @@ struct SettingsView: View {
                             Text("Version")
                             Spacer()
                             Text("1.0.0")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(AppColors.textMuted)
                         }
                     }
                 }

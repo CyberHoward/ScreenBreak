@@ -52,7 +52,7 @@ struct ConfigRestrictionsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color("backgroundColor").edgesIgnoringSafeArea(.all)
+                AppColors.bg.edgesIgnoringSafeArea(.all)
                 if(inRestrictionMode) {
                     restrictionView
                         .blur(radius: showHelp ? 30: 0)
@@ -107,10 +107,11 @@ struct ConfigRestrictionsView: View {
     
     var tutorialRestrictions: some View{
         ZStack{
-            Color(.lightGray).opacity(0.7)
+            AppColors.bgDark.opacity(0.9)
             VStack(alignment:.center){
                 Text("Restriction mode enables you to designate which applications you wish to impose limitations upon, along with the precise duration of their restricted usage. Subsequently, shields will be deployed to enforce the set restrictions until the expiration of the designated time frame, at which point they will be lifted. Exercise discretion in your selection!")
                     .customFont(.subheadline)
+                    .foregroundColor(AppColors.text)
                     .multilineTextAlignment(.center)
                 Spacer()
                     .frame(height:30)
@@ -120,11 +121,11 @@ struct ConfigRestrictionsView: View {
                 }label:{
                     Text("OK")
                         .customFont(.headline)
-                        .foregroundColor(.blue.opacity(0.5))
+                        .foregroundColor(AppColors.primary)
                         
                 }
                 .frame(width:60, height: 30)
-                .background(Color.white.opacity(0.6))
+                .background(AppColors.bgLight)
                 .mask(RoundedRectangle(cornerRadius: 30))
                 .shadow(radius:10)
             }
@@ -132,7 +133,7 @@ struct ConfigRestrictionsView: View {
         }
         .frame(width:UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.45)
         .mask(RoundedRectangle(cornerRadius:20))
-        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color("Border"), lineWidth: 2))
+        .overlay(RoundedRectangle(cornerRadius: 20).stroke(AppColors.border, lineWidth: 2))
         
     }
     
@@ -172,11 +173,11 @@ struct ConfigRestrictionsView: View {
     var baseView: some View{
         VStack(alignment: .center) {
             Spacer()
-            Text("Need a break from the apps?").customFont(.largeTitle).multilineTextAlignment(.center).bold()
-            Text("Tap to enter Restriction Mode!").customFont(.title3).multilineTextAlignment(.center)
+            Text("Need a break from the apps?").customFont(.largeTitle).foregroundColor(AppColors.text).multilineTextAlignment(.center).bold()
+            Text("Tap to enter Restriction Mode!").customFont(.title3).foregroundColor(AppColors.textMuted).multilineTextAlignment(.center)
             Button(action: {showingRestrictionView.toggle()}){
                 Image("appLogo").resizable().frame(width: 200, height:200)
-            }.shadow(color: Color("Shadow"), radius: 10)
+            }.shadow(color: AppColors.border.opacity(0.3), radius: 10)
                 .sheet(isPresented: $showingRestrictionView) {
                 RestrictionView(restrictionModel: restrictionModel).presentationDetents([.medium])
             }
