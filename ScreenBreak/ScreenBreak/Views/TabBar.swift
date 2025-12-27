@@ -6,52 +6,52 @@
 //
 
 import SwiftUI
-import RiveRuntime
 
 struct TabBar: View {
     @AppStorage("selectedTab") var selectedTab: Tab = .star
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
             
-            // Top border line
-            Rectangle()
-                .fill(AppColors.borderMuted)
-                .frame(height: 1)
+            // Fade effect at top instead of hard line
+            LinearGradient(
+                colors: [
+                    AppColors.bgDark.opacity(0),
+                    AppColors.bgDark.opacity(0.6),
+                    AppColors.bgDark
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .frame(height: 20)
             
             // Tab bar content
             HStack(spacing: 0) {
                 ForEach(tabItems) { item in
                     Button {
-                        try? item.icon.setInput("active", value: true)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            try? item.icon.setInput("active", value: false)
-                        }
                         withAnimation(.easeInOut(duration: 0.2)) {
                             selectedTab = item.tab
                         }
                     } label: {
-                        VStack(spacing: 4) {
-                            // Active indicator
-                            RoundedRectangle(cornerRadius: 2)
-                                .fill(AppColors.highlight)
-                                .frame(width: selectedTab == item.tab ? 24 : 0, height: 3)
-                                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: selectedTab)
-                            
-                            // Icon
-                            item.icon.view()
-                                .frame(width: 28, height: 28)
-                                .opacity(selectedTab == item.tab ? 1 : 0.4)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
+                        Image(systemName: item.iconName)
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundStyle(
+                                selectedTab == item.tab
+                                    ? (colorScheme == .dark ? AppColors.text : AppColors.text)
+                                    : AppColors.textMuted.opacity(0.5)
+                            )
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .scaleEffect(selectedTab == item.tab ? 1.1 : 1.0)
+                            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: selectedTab)
                     }
                     .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.bottom, 8)
+            .padding(.bottom, 24)
             .background(AppColors.bgDark)
         }
         .ignoresSafeArea(edges: .bottom)
@@ -66,15 +66,15 @@ struct TabBar_Previews: PreviewProvider {
 
 struct TabItem: Identifiable {
     var id = UUID()
-    var icon: RiveViewModel
+    var iconName: String
     var tab: Tab
 }
 
 var tabItems = [
-    TabItem(icon: RiveViewModel(fileName: "icons", stateMachineName: "HOME_interactivity", artboardName: "HOME"), tab: .home),
-    TabItem(icon: RiveViewModel(fileName: "icons", stateMachineName: "STAR_Interactivity", artboardName: "LIKE/STAR"), tab: .star),
-    TabItem(icon: RiveViewModel(fileName: "icons", stateMachineName: "TIMER_Interactivity", artboardName: "TIMER"), tab: .timer),
-    TabItem(icon: RiveViewModel(fileName: "icons", stateMachineName: "SEARCH_Interactivity", artboardName: "SEARCH"), tab: .search)
+    TabItem(iconName: "house.fill", tab: .home),
+    TabItem(iconName: "star.fill", tab: .star),
+    TabItem(iconName: "timer", tab: .timer),
+    TabItem(iconName: "magnifyingglass", tab: .search)
 ]
 
 enum Tab: String {
